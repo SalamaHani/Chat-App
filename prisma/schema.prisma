@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+model account {
+  id                   String    @id @map("_id")
+  accessToken          String?
+  accessTokenExpiresAt DateTime? @db.Date
+  accountId            String
+  createdAt            DateTime  @db.Date
+  idToken              String?
+  password             String?
+  providerId           String
+  scope                String?
+  updatedAt            DateTime  @db.Date
+  userId               String
+}
+
+model session {
+  id        String   @id @map("_id")
+  createdAt DateTime @db.Date
+  expiresAt DateTime @db.Date
+  ipAddress String
+  token     String   @unique
+  updatedAt DateTime @db.Date
+  userAgent String
+  userId    String
+}
+
+model User {
+  id      String   @id @map("_id")
+  name      String
+  email     String        @unique
+  authId   String?  @unique
+  emailVerified Boolean?
+  image     String?
+  status    String?
+  lastSeen  DateTime?     @default(now())
+  messages  Message[]      @relation("userMessages")
+  chats     ChatMember[]  @relation("userChatMembers")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime  @default(now())
+  
+}
+
+model Chat {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  isGroup   Boolean       @default(false)
+  members   ChatMember[]  @relation("ChatMembers")
+  messages  Message[]     @relation("ChatMessages")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime  @default(now())
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  senderId  String @db.ObjectId
+  chatId    String @db.ObjectId
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime  @default(now())
+  sender    User @relation("userMessages", fields: [senderId], references: [id])
+  chat      Chat @relation("ChatMessages", fields: [chatId], references: [id])
+}
+
+
+model ChatMember {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String @db.ObjectId
+  chatId   String @db.ObjectId
+  role     String?
+  user     User @relation("userChatMembers", fields: [userId], references: [id])
+  chat     Chat @relation("ChatMembers", fields: [chatId], references: [id])
+}
+model verification {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+

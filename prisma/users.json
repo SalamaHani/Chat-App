@@ -1,0 +1,222 @@
+[
+  {
+    "id": "U1",
+    "name": "Ahmed",
+    "email": "ahmed@example.com",
+    "image": "https://avatar.com/a.png",
+    "password": "",
+    "status": "online",
+    "lastSeen": "2025-11-05T10:05:00.000Z",
+    "createdAt": "2025-11-01T09:00:00.000Z",
+    "updatedAt": "2025-11-05T09:00:00.000Z",
+    "messages": [
+      {
+        "id": "M1",
+        "text": "Hello Mona!",
+        "senderId": "U1",
+        "chatId": "C1",
+        "createdAt": "2025-11-05T10:00:00.000Z",
+        "updatedAt": "2025-11-05T10:00:00.000Z"
+      },
+      {
+        "id": "M3",
+        "text": "Hey friends!",
+        "senderId": "U1",
+        "chatId": "C2",
+        "createdAt": "2025-11-05T10:05:00.000Z",
+        "updatedAt": "2025-11-05T10:05:00.000Z"
+      }
+    ],
+    "chats": [
+      {
+        "id": "CM1",
+        "role": "member",
+        "chat": {
+          "id": "C1",
+          "name": "Private Chat Ahmed & Mona",
+          "isGroup": false,
+          "members": [
+            { "user": { "id": "U1", "name": "Ahmed" } },
+            { "user": { "id": "U2", "name": "Mona" } }
+          ],
+          "messages": [
+            {
+              "id": "M1",
+              "text": "Hello Mona!",
+              "senderId": "U1",
+              "chatId": "C1"
+            },
+            {
+              "id": "M2",
+              "text": "Hi Ahmed!",
+              "senderId": "U2",
+              "chatId": "C1"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CM3",
+        "role": "admin",
+        "chat": {
+          "id": "C2",
+          "name": "Group Chat Friends",
+          "isGroup": true,
+          "members": [
+            { "user": { "id": "U1", "name": "Ahmed" } },
+            { "user": { "id": "U2", "name": "Mona" } },
+            { "user": { "id": "U3", "name": "Ali" } }
+          ],
+          "messages": [
+            {
+              "id": "M3",
+              "text": "Hey friends!",
+              "senderId": "U1",
+              "chatId": "C2"
+            },
+            {
+              "id": "M4",
+              "text": "Hello Ahmed!",
+              "senderId": "U2",
+              "chatId": "C2"
+            },
+            {
+              "id": "M5",
+              "text": "Hi everyone!",
+              "senderId": "U3",
+              "chatId": "C2"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "U2",
+    "name": "Mona",
+    "email": "mona@example.com",
+    "image": "https://avatar.com/mona.png",
+    "password": "",
+    "status": "offline",
+    "lastSeen": "2025-11-05T09:45:00.000Z",
+    "createdAt": "2025-11-01T09:10:00.000Z",
+    "updatedAt": "2025-11-05T09:50:00.000Z",
+    "messages": [
+      { "id": "M2", "text": "Hi Ahmed!", "senderId": "U2", "chatId": "C1" },
+      { "id": "M4", "text": "Hello Ahmed!", "senderId": "U2", "chatId": "C2" }
+    ],
+    "chats": [
+      {
+        "id": "CM2",
+        "role": "member",
+        "chat": {
+          "id": "C1",
+          "name": "Private Chat Ahmed & Mona",
+          "isGroup": false,
+          "members": [
+            { "user": { "id": "U1", "name": "Ahmed" } },
+            { "user": { "id": "U2", "name": "Mona" } }
+          ],
+          "messages": [
+            {
+              "id": "M1",
+              "text": "Hello Mona!",
+              "senderId": "U1",
+              "chatId": "C1"
+            },
+            {
+              "id": "M2",
+              "text": "Hi Ahmed!",
+              "senderId": "U2",
+              "chatId": "C1"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CM4",
+        "role": "member",
+        "chat": {
+          "id": "C2",
+          "name": "Group Chat Friends",
+          "isGroup": true,
+          "members": [
+            { "user": { "id": "U1", "name": "Ahmed" } },
+            { "user": { "id": "U2", "name": "Mona" } },
+            { "user": { "id": "U3", "name": "Ali" } }
+          ],
+          "messages": [
+            {
+              "id": "M3",
+              "text": "Hey friends!",
+              "senderId": "U1",
+              "chatId": "C2"
+            },
+            {
+              "id": "M4",
+              "text": "Hello Ahmed!",
+              "senderId": "U2",
+              "chatId": "C2"
+            },
+            {
+              "id": "M5",
+              "text": "Hi everyone!",
+              "senderId": "U3",
+              "chatId": "C2"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "U3",
+    "name": "Ali",
+    "email": "ali@example.com",
+    "image": "https://avatar.com/ali.png",
+    "status": "online",
+    "password": "",
+    "lastSeen": "2025-11-05T10:10:00.000Z",
+    "createdAt": "2025-11-01T09:20:00.000Z",
+    "updatedAt": "2025-11-05T10:00:00.000Z",
+    "messages": [
+      { "id": "M5", "text": "Hi everyone!", "senderId": "U3", "chatId": "C2" }
+    ],
+    "chats": [
+      {
+        "id": "CM5",
+        "role": "member",
+        "chat": {
+          "id": "C2",
+          "name": "Group Chat Friends",
+          "isGroup": true,
+          "members": [
+            { "user": { "id": "U1", "name": "Ahmed" } },
+            { "user": { "id": "U2", "name": "Mona" } },
+            { "user": { "id": "U3", "name": "Ali" } }
+          ],
+          "messages": [
+            {
+              "id": "M3",
+              "text": "Hey friends!",
+              "senderId": "U1",
+              "chatId": "C2"
+            },
+            {
+              "id": "M4",
+              "text": "Hello Ahmed!",
+              "senderId": "U2",
+              "chatId": "C2"
+            },
+            {
+              "id": "M5",
+              "text": "Hi everyone!",
+              "senderId": "U3",
+              "chatId": "C2"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
