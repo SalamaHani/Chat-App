@@ -27,7 +27,7 @@ export function Logout() {
       className="w-full flex items-center text-left"
       onClick={handleLogout}
     >
-      Logout <LogOut className="ml-3 size-3" />
+      <LogOut />
     </button>
   );
 }

@@ -1,15 +1,33 @@
-import { House } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { MessageCircleHeart } from "../animate-ui/icons/message-circle-heart";
+import { AnimateIcon } from "../animate-ui/icons/icon";
+import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars";
+import { WritingText } from "../ui/shadcn-io/writing-text";
 
+export const GravityStarsBackgroundDemo = () => {
+  return (
+    <GravityStarsBackground className="absolute inset-0 flex items-center justify-center rounded-xl" />
+  );
+};
 function HeroSection() {
   return (
     <div>
+      <GravityStarsBackgroundDemo />
       <section className="relative h-screen w-full bg-cover bg-center flex items-center justify-center object-cover ">
-        <div className="absolute inset-0 bg-red-500" />
-        <div className="relative z-10 text-center text-white max-w-2xl">
-          <h1 className="text-6xl md:text-6xl italic  font-medium  mb-6">
-            Confidence and Clarity in Every Move
+        <div className="absolute inset-0 " />
+        <div className="relative w-full z-10 text-center  max-w-3xl">
+          <h1 className="text-5xl md:text-5xl italic font-medium mb-6">
+            <WritingText
+              text="Start  Chatting  with  your  Friends"
+              inView={true}
+              transition={{
+                type: "spring",
+                bounce: 0,
+                duration: 2,
+                delay: 0.3,
+              }}
+            />
           </h1>
           <p className="text-lg md:text-xl mb-8">
             Explore the best products and services we offer
@@ -17,22 +35,15 @@ function HeroSection() {
           <div>
             <div className=" flex flex-wrap justify-center  gap-4">
               <Link
-                href="/sell"rftgft4gtyg
-                className="px-6 py-3  flex items-center italic bg-white text-black rounded-md shadow-lg text-lg font-semibold 
+                href="/chat"
+                className="px-6 py-3  flex items-center bg-[#0ea5e9] italic  rounded-md shadow-lg text-lg font-semibold 
              transition-all duration-300 ease-in-out 
                hover:scale-105"
               >
-                Search Sell Home
-                <House className="w-4 h-4 ml-2" />
-              </Link>
-              <Link
-                href="/listing"
-                className="px-6 py-3 bg-black flex items-center text-white italic  rounded-md shadow-lg text-lg font-semibold 
-             transition-all duration-300 ease-in-out 
-             hover:scale-105"
-              >
-                Search Buy Homes
-                <House className="w-4 h-4 ml-2" />
+                Go to Chat
+                <AnimateIcon className="w-6 h-6 ml-3" animateOnHover>
+                  <MessageCircleHeart animateOnHover />
+                </AnimateIcon>
               </Link>
             </div>
           </div>

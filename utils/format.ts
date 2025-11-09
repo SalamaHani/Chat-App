@@ -1,6 +1,9 @@
 export const setstring = (Username: string) => {
   return Username.toUpperCase().slice(0, 1);
 };
+export const towstring = (Username: string) => {
+  return Username.toUpperCase().slice(1, 2);
+};
 export const formatCurrency = (
   amount: number | null,
   currency?: string 

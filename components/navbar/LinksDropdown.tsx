@@ -45,6 +45,7 @@ function LinksDropdown({ session }: { session: Session | null }) {
           <div>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
+              Logout
               <Logout />
             </DropdownMenuItem>
           </div>

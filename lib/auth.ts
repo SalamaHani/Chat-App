@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { nextCookies } from "better-auth/next-js";
 const prisma = new PrismaClient();
 export const auth = betterAuth({
-  trustedOrigins: ["http://localhost:3000", "http://10.30.0.85:3000"],
+  trustedOrigins: ["http://localhost:3001", "http://10.30.0.85:3000"],
   emailAndPassword: {
     enabled: true,
   },
