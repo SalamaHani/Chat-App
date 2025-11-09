@@ -49,7 +49,7 @@ const data = {
   ],
   navMain: [
     {
-      title: "Chat",
+      title: "Chats",
       url: "/chat",
       icon: MessageCircleMore,
       isActive: true,
@@ -92,7 +92,7 @@ const data = {
   ],
 };
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  session: Session ;
+  session: Session | null;
 }
 export function AppSidebar({ session, ...props }: AppSidebarProps) {
   return (

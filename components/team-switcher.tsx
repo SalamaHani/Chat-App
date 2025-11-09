@@ -7,7 +7,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Separator } from "./ui/separator";
 
 export function TeamSwitcher({}: {
   teams: {
