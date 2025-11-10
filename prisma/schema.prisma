@@ -82,6 +82,27 @@ model ChatMember {
   user     User @relation("userChatMembers", fields: [userId], references: [id])
   chat     Chat @relation("ChatMembers", fields: [chatId], references: [id])
 }
+enum MessageType {
+  TEXT
+  IMAGE
+  VIDEO
+  FILE
+  SYSTEM
+}
+
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+  FAILED
+  DELETED
+}
+
+enum ParticipantRole {
+  MEMBER
+  ADMIN
+  OWNER
+}
 model verification {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
