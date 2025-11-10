@@ -143,14 +143,17 @@ function Highlight<T extends React.ElementType = 'div'>({
     React.useState<string>('');
 
   const safeSetActiveValue = React.useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (id: string | null) => {
       setActiveValue((prev) => (prev === id ? prev : id));
       if (id !== activeValue) onValueChange?.(id);
     },
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     [activeValue, onValueChange],
   );
 
   const safeSetBounds = React.useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (bounds: DOMRect) => {
       if (!localRef.current) return;
 
@@ -183,6 +186,7 @@ function Highlight<T extends React.ElementType = 'div'>({
         return newBounds;
       });
     },
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     [props],
   );
 
@@ -215,6 +219,7 @@ function Highlight<T extends React.ElementType = 'div'>({
   }, [mode, activeValue, safeSetBounds]);
 
   const render = React.useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (children: React.ReactNode) => {
       if (mode === 'parent') {
         return (
@@ -263,13 +268,20 @@ function Highlight<T extends React.ElementType = 'div'>({
       return children;
     },
     [
+      // eslint-disable-next-line react-hooks/preserve-manual-memoization
       mode,
+      // eslint-disable-next-line react-hooks/preserve-manual-memoization
       Component,
+      // eslint-disable-next-line react-hooks/preserve-manual-memoization
       props,
       boundsState,
+      // eslint-disable-next-line react-hooks/preserve-manual-memoization
       transition,
+      // eslint-disable-next-line react-hooks/preserve-manual-memoization
       exitDelay,
+      // eslint-disable-next-line react-hooks/preserve-manual-memoization
       style,
+      // eslint-disable-next-line react-hooks/preserve-manual-memoization
       className,
       activeClassNameState,
     ],
@@ -484,6 +496,7 @@ function HighlightItem<T extends React.ElementType>({
     if (mode === 'children') {
       return React.cloneElement(
         element,
+        // eslint-disable-next-line react-hooks/refs
         {
           key: childValue,
           ref: localRef,
@@ -537,6 +550,7 @@ function HighlightItem<T extends React.ElementType>({
       );
     }
 
+    // eslint-disable-next-line react-hooks/refs
     return React.cloneElement(element, {
       ref: localRef,
       ...getNonOverridingDataAttributes(element, {

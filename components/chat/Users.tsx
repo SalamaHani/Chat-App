@@ -1,9 +1,10 @@
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar } from "@radix-ui/react-avatar";
 import React from "react";
 import { AvatarFallback } from "../ui/avatar";
-import { formatTime, formatTimeArabic, setstring } from "@/utils/format";
+import { formatTimeArabic, setstring } from "@/utils/format";
 import { User } from "@prisma/client";
 import { Badge } from "../ui/badge";
+
 interface PropsUser {
   user: User | null;
   key: string;
@@ -20,23 +21,22 @@ function Users({ user, key }: PropsUser) {
   return (
     <div
       key={key}
-      className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex flex-1 gap-4 justify-between "
+      className="flex items-center justify-between gap-5 rounded-sm  p-2"
     >
-      <div className="flex flex-1 gap-4 w-[90%]">
+      <div className="flex items-center gap-2">
         <Avatar className="h-12 w-12 rounded-lg">
-          {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
           <AvatarFallback className="rounded-full">
             {setstring(user?.name || "")}
           </AvatarFallback>
         </Avatar>
-        <div className="grid flex-1 text-left text-sm leading-tight">
-          <span className="truncate font-medium">{user?.name}</span>
-          <span className="text-xs text-gray-500 dark:text-neutral-500">
+        <div>
+          <div className="text-sm font-semibold">{user?.name}</div>
+          <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
             {user?.email}
-          </span>
+          </div>
         </div>
       </div>
-      <div className="grid flex-1 w-[10%] flex-col-reverse text-left text-xs leading-tight">
+      <div className="flex flex-col items-end justify-around size-12  ">
         <MessageTime createdAt={user?.createdAt ?? Date.now} />
         <Badge className="h-4 min-w-4 rounded-full px-1 font-mono tabular-nums">
           8

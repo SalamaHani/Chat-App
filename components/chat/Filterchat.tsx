@@ -42,14 +42,14 @@ export const currencies = [
 ];
 function Filterchat() {
   return (
-    <Menu  >
+    <Menu>
       <MenuTrigger>
         <AnimateIcon animateOnHover>
           <SlidersHorizontal size={20} />
         </AnimateIcon>
       </MenuTrigger>
-      <MenuPanel >
-        <MenuGroup >
+      <MenuPanel>
+        <MenuGroup>
           {currencies.map((cur) => {
             const Iconse = cur.icon;
             return (
