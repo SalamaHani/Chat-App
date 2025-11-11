@@ -18,10 +18,13 @@ export function MessageTime({ createdAt }: { createdAt: Date }) {
 }
 
 function Users({ user, key }: PropsUser) {
+  const isActive = false;
   return (
     <div
       key={key}
-      className="flex items-center justify-between gap-5 rounded-sm  p-2"
+      className={`${
+        isActive ? `bg-[#1e293b]` : `bg-none`
+      } hover:bg-[#1e293b] flex items-center justify-between  gap-5 rounded-sm  p-2`}
     >
       <div className="flex items-center gap-2">
         <Avatar className="h-12 w-12 rounded-lg">

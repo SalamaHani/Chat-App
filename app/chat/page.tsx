@@ -11,11 +11,12 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import ChatMasseg from "@/components/chat/ChatMasseg";
 import ChatFrinds from "@/components/chat/ChatFrinds";
+import { redirect } from "next/navigation";
 async function page() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  console.log(session);
+  if (!session?.user) redirect("/login");
   return (
     <div>
       <SidebarProvider>
