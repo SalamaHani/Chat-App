@@ -50,7 +50,7 @@ const data = {
   navMain: [
     {
       title: "Chats",
-      url: "/chat",
+      url: "/chats",
       icon: MessageCircleMore,
       isActive: true,
     },
