@@ -18,13 +18,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     headers: await headers(),
   });
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <Providers>
-          <Navbar session={session} />
-          {children}
-        </Providers>
-      </body>
-    </html>
+    <Providers>
+      <Navbar session={session} />
+      {children}
+    </Providers>
   );
 }

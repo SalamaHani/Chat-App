@@ -32,10 +32,14 @@ async function ChatFrinds() {
   //     transition: { duration: 0.22, ease: 'easeInOut' },
   //  }
   return (
-    <div className="bg-[#111827] rounded-l-xl border-r-[#4b5563] border-r-[1px]  overflow-hidden  w-[30%]">
+    <div className="bg-[#111827] rounded-xl  overflow-hidden h-full  w-full">
       <HadChatFrind />
       <SearshChat />
-      <div className={"space-y-2 relative px-2"}>
+      <div
+        className={
+          "space-y-2 relative px-2 min-h-120 max-h-120 overflow-y-auto"
+        }
+      >
         {users.map((user) => {
           return <Users key={user.id} user={user} />;
         })}

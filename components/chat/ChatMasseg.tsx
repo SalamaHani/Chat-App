@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import HadChatMasseg from "./HadChatMasseg";
 import FormChat from "./FormChat";
 import MassegChat from "./MassegChat";
-import { socket } from "@/lib/socketClinet";
+// import { socket } from "@/lib/socketClinet";
 
 function ChatMasseg() {
   const [messages, setMessgages] = useState<
@@ -13,37 +13,46 @@ function ChatMasseg() {
   const handelSendMessgage = (message: string) => {
     const data = { message, sender: username };
     setMessgages((prev) => [...prev, { sender: username, message }]);
-    socket.emit("message", data);
+    // socket.emit("message", data);
     console.log(message);
   };
-  useEffect(() => {
-    socket.on("message", (data) => {
-      setMessgages((prev) => [...prev, data]);
-    });
-    return () => {
-      socket.off("join_room");
-      socket.off("message");
-    };
-  }, []);
+  // useEffect(() => {
+  //   socket.on("message", (data) => {
+  //     setMessgages((prev) => [...prev, data]);
+  //   });
+  //   return () => {
+  //     socket.off("join_room");
+  //     socket.off("message");
+  //   };
+  // }, []);
   return (
-    <div className="bg-[#1f2937] rounded-xl rounded-bl-none w-[70%] h-full">
-      <HadChatMasseg />
-      <div className=" flex  w-full ">
-        <div className="w-full  ">
-          <div className="h-[530px] overflow-y-hidden bg-amber-200">
-            {messages.map((msg, index) => {
-              return (
-                <MassegChat
-                  key={index}
-                  sender={msg.sender}
-                  messgage={msg.message}
-                  isOwnMasseg={msg.sender === username}
-                />
-              );
-            })}
-          </div>
-          <div className="flex h-[57px]  justify-center items-center">
-            <FormChat onSendMessage={handelSendMessgage} />
+    <div className=" relative  pr-4 bg-background w-full  rounded-xl">
+      <header className="flex  h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+        <div className="flex items-center gap-2 px-4"></div>
+      </header>
+      <div className="flex flex-1 w-full  rounded-xl gap-4 p-4 pt-0">
+        <div className="flex flex-1 rounded-xl ">
+          <div className="bg-[#2e4a71] rounded-xl  w-full h-full">
+            <HadChatMasseg />
+            <div className=" flex  w-full ">
+              <div className="w-full h-full overflow-hidden  ">
+                <div className="max-h-120 min-h-120 overflow-y-auto ">
+                  {messages.map((msg, index) => {
+                    return (
+                      <MassegChat
+                        key={index}
+                        sender={msg.sender}
+                        messgage={msg.message}
+                        isOwnMasseg={msg.sender === username}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="flex h-[57px]  justify-center items-center">
+                  <FormChat onSendMessage={handelSendMessgage} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -11,3 +11,25 @@ export const faveretlisting = async () => {
   });
   return Users;
 };
+
+export const getCuruentUser = async () => {
+  try {
+    const session = await getSession();
+    if (!session?.user?.email) {
+      return null;
+    }
+    const cureuntUser = await db.user.findUnique({
+      where: {
+        email: session?.user?.email,
+      },
+    });
+    if (!cureuntUser) {
+      return null;
+    }
+    return cureuntUser;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return null;
+  }
+};

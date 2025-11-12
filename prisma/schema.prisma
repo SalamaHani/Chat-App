@@ -9,9 +9,32 @@ datasource db {
 
 
 
+model User {
+  id            String   @id @map("_id")
+  name          String
+  email         String    @unique
+  emailVerified Boolean
+  image         String?
+  status        String?
+  lastSeen      DateTime? @default(now())
 
-model account {
-  id                   String    @id @map("_id")
+  conversationIds String[]        @db.ObjectId
+  conversations   Conversations[] @relation(fields: [conversationIds], references: [id])
+
+  seenMessageIds String[]  @db.ObjectId
+  seenMessages   Message[] @relation("Seen", fields: [seenMessageIds], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  accounts Account[]
+  session  Session[]
+  messages Message[]
+  @@map("user")
+}
+
+model Account {
+   id                   String    @id @map("_id")
   accessToken          String?
   accessTokenExpiresAt DateTime? @db.Date
   accountId            String
@@ -22,66 +45,72 @@ model account {
   scope                String?
   updatedAt            DateTime  @db.Date
   userId               String
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    @@map("account")
 }
 
-model session {
-  id        String   @id @map("_id")
-  createdAt DateTime @db.Date
-  expiresAt DateTime @db.Date
-  ipAddress String
-  token     String   @unique
-  updatedAt DateTime @db.Date
-  userAgent String
-  userId    String
-}
+model Conversations {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime @default(now())
+  lastMessageAt DateTime @default(now())
+  name          String?
+  isGroup       Boolean  @default(false)
 
-model User {
-  id      String     @id @map("_id") 
-  name      String
-  email     String        @unique
-  emailVerified Boolean?
-  image     String?
-  status    String?
-  lastSeen  DateTime?     @default(now())
-  messages  Message[]      @relation("userMessages")
-  chats     ChatMember[]  @relation("userChatMembers")
-  createdAt DateTime      @default(now())
-  updatedAt DateTime  @default(now())
-  
-}
+  messagesId String    @db.ObjectId
+  messages   Message[]
 
-
-model Chat {
-  id        String        @id @default(auto()) @map("_id") @db.ObjectId
-  name      String?
-  isGroup   Boolean       @default(false)
-  members   ChatMember[]  @relation("ChatMembers")
-  messages  Message[]     @relation("ChatMessages")
-  createdAt DateTime      @default(now())
-  updatedAt DateTime  @default(now())
+  userIds String[]
+  users   User[]   @relation(fields: [userIds], references: [id])
 }
 
 model Message {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  text      String
-  senderId  String @db.ObjectId
-  chatId    String @db.ObjectId
+  body      String?
   image     String?
   createdAt DateTime @default(now())
-  updatedAt DateTime  @default(now())
-  sender    User @relation("userMessages", fields: [senderId], references: [id])
-  chat      Chat @relation("ChatMessages", fields: [chatId], references: [id])
+  chatId    String   @db.ObjectId
+  updatedAt DateTime @default(now())
+
+  seenIds String[]
+  seen    User[]   @relation("Seen", fields: [seenIds], references: [id])
+
+  conversationId String        @db.ObjectId
+  conversation   Conversations @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  senderId String
+  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+}
+model Session {
+  id        String       @id @map("_id")
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId               String
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("session")
 }
 
+// model Chat {
+//   id        String        @id @default(auto()) @map("_id") @db.ObjectId
+//   name      String?
+//   isGroup   Boolean       @default(false)
+//   members   ChatMember[]  @relation("ChatMembers")
+//   messages  Message[]     @relation("ChatMessages")
+//   createdAt DateTime      @default(now())
+//   updatedAt DateTime  @default(now())
+// }
 
-model ChatMember {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String @db.ObjectId
-  chatId   String @db.ObjectId
-  role     String?
-  user     User @relation("userChatMembers", fields: [userId], references: [id])
-  chat     Chat @relation("ChatMembers", fields: [chatId], references: [id])
-}
+// model ChatMember {
+//   id       String @id @default(auto()) @map("_id") @db.ObjectId
+//   userId   String @db.ObjectId
+//   chatId   String @db.ObjectId
+//   role     String?
+//   user     User @relation("userChatMembers", fields: [userId], references: [id])
+//   chat     Chat @relation("ChatMembers", fields: [chatId], references: [id])
+// }
 enum MessageType {
   TEXT
   IMAGE
@@ -103,7 +132,7 @@ enum ParticipantRole {
   ADMIN
   OWNER
 }
+
 model verification {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
-

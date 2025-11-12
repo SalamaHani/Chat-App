@@ -1,9 +1,12 @@
+"use client";
 import { Avatar } from "@radix-ui/react-avatar";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { AvatarFallback } from "../ui/avatar";
 import { formatTimeArabic, setstring } from "@/utils/format";
 import { User } from "@prisma/client";
 import { Badge } from "../ui/badge";
+import axios from "axios"
+import { useRouter } from "next/navigation";
 
 interface PropsUser {
   user: User | null;
@@ -18,10 +21,21 @@ export function MessageTime({ createdAt }: { createdAt: Date }) {
 }
 
 function Users({ user, key }: PropsUser) {
-  const isActive = false;
+  const routur = useRouter();
+  const [isLoding, setIsloding] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const handelCilek = useCallback(() => {
+    setIsloding(true);
+    axios.post('/api/conversations',{
+      userId: user?.id
+    }).then((data)=>{
+        routur.push(`/conversations/${data.data.id}`)
+    }).finally(()=>setIsloding(false))
+  }, [user,routur]);
   return (
     <div
       key={key}
+      onClick={handelCilek}
       className={`${
         isActive ? `bg-[#1e293b]` : `bg-none`
       } hover:bg-[#1e293b] flex items-center justify-between  gap-5 rounded-sm  p-2`}
