@@ -6,6 +6,8 @@ import { FaHips } from "react-icons/fa";
 import MessageInput from "./MessageInput";
 import { AnimateIcon } from "../animate-ui/icons/icon";
 import { Send } from "lucide-react";
+import Typeinpust from "./Typeinpust";
+import { SendHorizontal } from "../animate-ui/icons/send-horizontal";
 
 function FormChat() {
   const { converstionId } = useConverstion();
@@ -21,8 +23,8 @@ function FormChat() {
   });
   const onSubmit: SubmitHandler<FieldValues> = (data) => {};
   return (
-    <div className="py-4 px-4 bg-white  border-t flex items-center gap-2 w-full">
-      <FaHips size={30} />
+    <div className="py-4 px-4   border-t flex items-center gap-2 w-full">
+      <Typeinpust />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex items-center gap-2 w-full"
@@ -34,12 +36,9 @@ function FormChat() {
           required
           placeholder="Write a Message"
         />
-        <button
-          type="submit"
-          className=" rounded-full p-2 bg-sky-500 cursor-pointer hover:bg-sky-600 transition"
-        >
+        <button type="submit" className=" rounded-full p-2  transition">
           <AnimateIcon animateOnHover>
-            <Send />
+            <SendHorizontal />
           </AnimateIcon>
         </button>
       </form>

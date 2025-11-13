@@ -5,7 +5,7 @@ function Body() {
   return (
     <div className=" flex  w-full ">
       <div className="w-full h-full overflow-hidden  ">
-        <div className="max-h-120 min-h-120 overflow-y-auto bg-red-500 ">
+        <div className="max-h-120 min-h-120 overflow-y-auto  ">
           {/* {messages.map((msg, index) => {
             return (
               <MassegChat

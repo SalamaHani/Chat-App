@@ -4,11 +4,16 @@ import HedConversation from "@/components/conversations/HedConversation";
 import { getCaonversationById, getMessages } from "@/utils/action";
 import React from "react";
 interface IdPrames {
-  conversationId: string;
+  params: Promise<{
+    conversationId: string;
+  }>;
 }
-async function page({ params }: { params: IdPrames }) {
-  const conversation = await getCaonversationById(params?.conversationId);
-  const messages = await getMessages(params?.conversationId);
+async function page({ params }: IdPrames) {
+  const resolvedParams = await params;
+  const { conversationId } = resolvedParams;
+  const conversation = await getCaonversationById(conversationId);
+  console.log(conversation);
+  const messages = await getMessages(conversationId);
   console.log(messages);
 
   if (!conversation) {

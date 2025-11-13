@@ -29,7 +29,7 @@ const MessageInput: React.FC<MessageINputProps> = ({
         autoComplete={id}
         {...register(id, { required })}
         placeholder={placeholder}
-        className=" text-black font-light py-2 px-4 bg-neutral-100 w-full rounded-full focus:online-none"
+        className="  font-light py-2 px-4  w-full rounded-full focus:online-none"
       />
     </div>
   );
