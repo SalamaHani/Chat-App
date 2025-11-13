@@ -1,26 +1,22 @@
 "use client";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { setstring } from "@/utils/format";
-import { MessageTime } from "../chat/Users";
 import { Badge } from "../ui/badge";
 import { useRouter } from "next/navigation";
-import { format } from "data-fns";
 import { authClient } from "@/lib/auth-client";
 import { FullConversationstype } from "@/app/types";
+import { format } from "date-fns";
 import useOthouUser from "@/app/hook/useOthouUser";
 interface ConversationBoxProps {
   data: FullConversationstype;
   isActive?: boolean;
-  key: string;
 }
 export default function ConversationBox({
   data,
   isActive,
-  key,
 }: ConversationBoxProps) {
   const routur = useRouter();
-  const [isLoding, setIsloding] = useState(false);
   const session = authClient.useSession();
   const othuruser = useOthouUser(data);
   const handelCilek = useCallback(() => {
@@ -43,16 +39,16 @@ export default function ConversationBox({
     if (!userEmail) {
       return false;
     }
-    const seenArray = lastMessage.seen || [];
+    const seenArray = lastMessage?.seen || [];
 
     return (
       seenArray.filter((user) => {
-        user.email == userEmail;
+        user?.email == userEmail;
       }).length != 0
     );
   }, [userEmail, lastMessage]);
   const countlasmasseags = useMemo(() => {
-    const countMessages = lastMessage.seen.length;
+    const countMessages = lastMessage?.seen?.length;
     return countMessages;
   }, [lastMessage]);
 
@@ -65,12 +61,9 @@ export default function ConversationBox({
     }
     return "Start Conversation ";
   }, [lastMessage]);
-  if (isLoding) {
-    return <Avatar>45</Avatar>;
-  }
+
   return (
     <div
-      key={key}
       onClick={handelCilek}
       className={`${
         isActive ? `bg-[#1e293b]` : `bg-none`
@@ -88,7 +81,7 @@ export default function ConversationBox({
           </div>
           <div
             className={`text-sm  truncate ${
-              hasSeen ? `bg-gray-500 ` : `bg-black font-medium`
+              hasSeen ? `text-gray-500 ` : `text-black font-medium`
             }`}
           >
             {lasetMsessageText}
@@ -97,7 +90,9 @@ export default function ConversationBox({
       </div>
       <div className="flex flex-col items-end justify-around size-12  ">
         <span className="text-xs text-muted-foreground">
-          {format(new Date(lastMessage.createdAt), "p")}
+          {lastMessage?.createdAt
+            ? format(new Date(lastMessage.createdAt), "p")
+            : "—"}
         </span>
         <Badge className="h-4 min-w-4 rounded-full px-1 font-mono tabular-nums">
           {countlasmasseags}

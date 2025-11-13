@@ -1,24 +1,25 @@
-import { Param } from "@prisma/client/runtime/library";
+"use client";
+
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
 const useConverstion = () => {
-  const Params = useParams();
+  const params = useParams();
 
-  const converstionId = useMemo(() => {
-    if (!Params?.converstionId) {
-      return "";
-    }
-    return Params?.converstionId as string;
-  }, [Params?.converstionId]);
-  const isOpen = useMemo(() => !!converstionId, [converstionId]);
+  const conversationId = useMemo(() => {
+    if (!params?.conversationId) return "";
+    return params.conversationId as string;
+  }, [params?.conversationId]);
+
+  const isOpen = useMemo(() => !!conversationId, [conversationId]);
 
   return useMemo(
     () => ({
       isOpen,
-      converstionId,
+      conversationId,
     }),
-    [converstionId, isOpen]
+    [isOpen, conversationId]
   );
 };
-export default useConverstion
+
+export default useConverstion;

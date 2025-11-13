@@ -1,3 +1,4 @@
+import { FullConversationstype } from "@/app/types";
 import { Home } from "lucide-react";
 import React from "react";
 

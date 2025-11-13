@@ -60,7 +60,51 @@ export const getConversations = async () => {
       },
     });
     return Conversations;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return [];
+  }
+};
+
+export const getCaonversationById = async (conversationId: string) => {
+  try {
+    const curentuser = await getCuruentUser();
+    if (!curentuser?.email) {
+      return null;
+    }
+    const Conversation = await db.conversations.findUnique({
+      where: {
+        id: conversationId,
+      },
+      include: {
+        users: true,
+      },
+    });
+    return Conversation;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const getMessages = async (conversationId: string) => {
+  try {
+    const curentuser = await getCuruentUser();
+    if (!curentuser?.email) {
+      return [];
+    }
+    const Messages = await db.message.findMany({
+      where: {
+        conversationId: conversationId,
+      },
+      include: {
+        seen: true,
+        sender: true,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+    return Messages;
   } catch (error) {
     return [];
   }
