@@ -55,10 +55,8 @@ model Conversations {
   lastMessageAt DateTime @default(now())
   name          String?
   isGroup       Boolean  @default(false)
-
-  messagesId String    @db.ObjectId
+  messagesId String?    @db.ObjectId
   messages   Message[]
-
   userIds String[]
   users   User[]   @relation(fields: [userIds], references: [id])
 }

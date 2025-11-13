@@ -33,3 +33,35 @@ export const getCuruentUser = async () => {
     return null;
   }
 };
+
+export const getConversations = async () => {
+  const curentuser = await getCuruentUser();
+  if (!curentuser?.id) {
+    return [];
+  }
+  try {
+    const Conversations = await db.conversations.findMany({
+      orderBy: {
+        lastMessageAt: "desc",
+      },
+      where: {
+        userIds: {
+          has: curentuser.id,
+        },
+      },
+      include: {
+        users: true,
+        messages: {
+          include: {
+            sender: true,
+            seen: true,
+          },
+        },
+      },
+    });
+    return Conversations;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return [];
+  }
+};

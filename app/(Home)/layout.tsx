@@ -18,6 +18,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     headers: await headers(),
   });
   return (
+    
     <Providers>
       <Navbar session={session} />
       {children}

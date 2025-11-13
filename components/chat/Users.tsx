@@ -5,8 +5,9 @@ import { AvatarFallback } from "../ui/avatar";
 import { formatTimeArabic, setstring } from "@/utils/format";
 import { User } from "@prisma/client";
 import { Badge } from "../ui/badge";
-import axios from "axios"
+import axios from "axios";
 import { useRouter } from "next/navigation";
+
 
 interface PropsUser {
   user: User | null;
@@ -26,12 +27,20 @@ function Users({ user, key }: PropsUser) {
   const [isActive, setIsActive] = useState(false);
   const handelCilek = useCallback(() => {
     setIsloding(true);
-    axios.post('/api/conversations',{
-      userId: user?.id
-    }).then((data)=>{
-        routur.push(`/conversations/${data.data.id}`)
-    }).finally(()=>setIsloding(false))
-  }, [user,routur]);
+    axios
+      .post("/api/conversations", {
+        userId: user?.id,
+      })
+      .then((data) => {
+        routur.push(`/conversations/${data.data.id}`);
+        console.log("ronde");
+        setIsActive(user?.id == data.data.id);
+      })
+      .finally(() => setIsloding(false));
+  }, [user, routur]);
+  if (isLoding) {
+    return <Avatar>45</Avatar>;
+  }
   return (
     <div
       key={key}

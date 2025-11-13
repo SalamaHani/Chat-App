@@ -43,15 +43,37 @@ export async function POST(requset: Request) {
             },
           },
           {
-            userIds:{
-                equals:[cureuntUser.id , userId]
-            }
-          }
+            userIds: {
+              equals: [cureuntUser.id, userId],
+            },
+          },
         ],
       },
     });
-    const singelConversations = exsistingConversations
+    const singelConversations = exsistingConversations[0];
+    if (singelConversations) {
+      return NextResponse.json(singelConversations);
+    }
+    const newConversations = await prisma.conversations.create({
+      data: {
+        users: {
+          connect: [
+            {
+              id: cureuntUser?.id,
+            },
+            {
+              id: userId,
+            },
+          ],
+        },
+      },
+      include: {
+        users: true,
+      },
+    });
+    return NextResponse.json(newConversations);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    return new NextResponse("Internal Error", { status: 500 });
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
