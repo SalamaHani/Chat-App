@@ -8,6 +8,7 @@ import { authClient } from "@/lib/auth-client";
 import { FullConversationstype } from "@/app/types";
 import { format } from "date-fns";
 import useOthouUser from "@/app/hook/useOthouUser";
+import { MessageTime } from "../chat/Users";
 interface ConversationBoxProps {
   data: FullConversationstype;
   isActive?: boolean;
@@ -49,6 +50,7 @@ export default function ConversationBox({
   }, [userEmail, lastMessage]);
   const countlasmasseags = useMemo(() => {
     const countMessages = lastMessage?.seen?.length;
+    console.log(lastMessage, "gfbgfferg");
     return countMessages;
   }, [lastMessage]);
 
@@ -66,8 +68,8 @@ export default function ConversationBox({
     <div
       onClick={handelCilek}
       className={`${
-        isActive ? `bg-[#1e293b]` : `bg-none`
-      } hover:bg-[#1e293b] flex items-center justify-between  gap-5 rounded-sm  p-2`}
+        isActive ? `bg-neutral-900` : `bg-none`
+      } hover:bg-neutral-800 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
     >
       <div className="flex items-center gap-2">
         <Avatar className="h-12 w-12 rounded-lg">
@@ -81,7 +83,9 @@ export default function ConversationBox({
           </div>
           <div
             className={`text-sm  truncate ${
-              hasSeen ? `text-gray-500 ` : `text-black font-medium`
+              hasSeen
+                ? `text-gray-500 dark:text-white`
+                : `text-gray-500 font-medium`
             }`}
           >
             {lasetMsessageText}
@@ -89,13 +93,9 @@ export default function ConversationBox({
         </div>
       </div>
       <div className="flex flex-col items-end justify-around size-12  ">
-        <span className="text-xs text-muted-foreground">
-          {lastMessage?.createdAt
-            ? format(new Date(lastMessage.createdAt), "p")
-            : "—"}
-        </span>
-        <Badge className="h-4 min-w-4 rounded-full px-1 font-mono tabular-nums">
-          {countlasmasseags}
+        <MessageTime createdAt={lastMessage?.createdAt ?? Date.now} />
+        <Badge className="h-4 min-w-4 rounded-full bg-sidebar-primary px-1 font-mono tabular-nums">
+          {countlasmasseags != undefined ? countlasmasseags : 2}
         </Badge>
       </div>
     </div>

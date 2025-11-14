@@ -1,16 +1,12 @@
 "use client";
-import useConverstion from "@/app/hook/useConverstion";
 import React from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
-import { FaHips } from "react-icons/fa";
 import MessageInput from "./MessageInput";
 import { AnimateIcon } from "../animate-ui/icons/icon";
-import { Send } from "lucide-react";
 import Typeinpust from "./Typeinpust";
 import { SendHorizontal } from "../animate-ui/icons/send-horizontal";
 
 function FormChat() {
-  const { converstionId } = useConverstion();
   const {
     register,
     handleSubmit,
@@ -23,7 +19,7 @@ function FormChat() {
   });
   const onSubmit: SubmitHandler<FieldValues> = (data) => {};
   return (
-    <div className="py-4 px-4   border-t flex items-center gap-2 w-full">
+    <div className="py-4 px-4  bg-white dark:bg-neutral-900 rounded-br-xl  flex items-center justify-center gap-2 w-full">
       <Typeinpust />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -36,9 +32,12 @@ function FormChat() {
           required
           placeholder="Write a Message"
         />
-        <button type="submit" className=" rounded-full p-2  transition">
+        <button
+          type="submit"
+          className=" rounded-full p-2 bg-sidebar-primary  transition"
+        >
           <AnimateIcon animateOnHover>
-            <SendHorizontal />
+            <SendHorizontal color="#f0f9ff" size={20} />
           </AnimateIcon>
         </button>
       </form>

@@ -6,7 +6,7 @@ import { Input } from "../ui/input";
 function SearshChat() {
   const [isOpen, setIsopen] = useState(false);
   return (
-    <div className="  flex-1 flex rounded-t-xl rounded-tr-none px-4      bg-[#111827]  h-18 shrink-0  gap-2  ">
+    <div className="  flex-1 flex px-4   bg-white dark:bg-neutral-900    h-18 shrink-0  gap-2  ">
       <Input
         type="text"
         placeholder="Search or Start new chat"

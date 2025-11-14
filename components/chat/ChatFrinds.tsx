@@ -32,7 +32,7 @@ async function ChatFrinds() {
   //     transition: { duration: 0.22, ease: 'easeInOut' },
   //  }
   return (
-    <div className="bg-[#111827] rounded-xl  overflow-hidden h-full  w-full">
+    <div className=" rounded-xl  overflow-hidden h-full  w-full">
       <HadChatFrind />
       <SearshChat />
       <div

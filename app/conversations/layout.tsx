@@ -15,7 +15,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import ChatFrinds from "@/components/chat/ChatFrinds";
 import ConversationsList from "@/components/conversations/ConversationsList";
 import { getConversations } from "@/utils/action";
 export default async function ChatLayout({
@@ -26,7 +25,7 @@ export default async function ChatLayout({
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-   const Conversations = await getConversations()
+  const Conversations = await getConversations();
   if (!session?.user) redirect("/login");
   return (
     <SidebarProvider>
@@ -37,7 +36,7 @@ export default async function ChatLayout({
             <SidebarTrigger className="-ml-1" />
           </div>
         </header>
-        <div className="flex w-full flex-1 gap-3 p-4 pt-0">
+        <div className="flex w-full  flex-1  pl-4 pt-0">
           <ConversationsList intialItems={Conversations} />
         </div>
       </SidebarInset>

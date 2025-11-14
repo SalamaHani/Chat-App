@@ -3,9 +3,9 @@ import FormChat from "./FormChat";
 
 function Body() {
   return (
-    <div className=" flex  w-full ">
+    <div className=" flex  rounded-xl w-full ">
       <div className="w-full h-full overflow-hidden  ">
-        <div className="max-h-120 min-h-120 overflow-y-auto  ">
+        <div className="max-h-125 min-h-125   overflow-y-auto  ">
           {/* {messages.map((msg, index) => {
             return (
               <MassegChat
@@ -17,7 +17,7 @@ function Body() {
             );
           })} */}
         </div>
-        <div className="flex h-[57px]  justify-center items-center">
+        <div className="flex h-[52px]  flex-1  justify-center items-center">
           <FormChat />
         </div>
       </div>

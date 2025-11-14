@@ -42,9 +42,9 @@ export const currencies = [
 function Typeinpust() {
   return (
     <Menu>
-      <MenuTrigger>
+      <MenuTrigger className="rounded-xl p-2 bg-sidebar-primary transition">
         <AnimateIcon animateOnHover>
-          <Link size={20} />
+          <Link color="#f0f9ff" size={20} />
         </AnimateIcon>
       </MenuTrigger>
       <MenuPanel>

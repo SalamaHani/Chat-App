@@ -21,13 +21,13 @@ async function page({ params }: IdPrames) {
   }
 
   return (
-    <div className=" relative  pr-4 bg-background w-full  rounded-xl">
+    <div className=" relative  pr-4  w-full  rounded-xl ">
       <header className="flex  h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
         <div className="flex items-center gap-2 px-4"></div>
       </header>
-      <div className="flex flex-1 w-full  rounded-xl gap-4 p-4 pt-0">
-        <div className="flex flex-1 rounded-xl ">
-          <div className="bg-[#2e4a71] rounded-xl  w-full h-full">
+      <div className="flex flex-1 w-full  p  pt-0">
+        <div className="flex flex-1  ">
+          <div className=" w-full h-full">
             <HedConversation conversation={conversation} />
             <Body />
           </div>

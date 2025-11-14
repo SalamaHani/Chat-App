@@ -8,7 +8,6 @@ import { Badge } from "../ui/badge";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-
 interface PropsUser {
   user: User | null;
   key: string;

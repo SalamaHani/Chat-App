@@ -39,16 +39,21 @@ export function formatPrice(value: string): string {
   }
   return `${num}`;
 }
-export function formatTimeArabic(date: Date) {
-  let hours = date.getHours();
-  const minutes = date.getMinutes().toString().padStart(2, "0");
+export function formatTimeArabic(date: Date | string | null | undefined) {
+  if (!date) return "";
+
+  const d = date instanceof Date ? date : new Date(date);
+
+  // Check if date is valid
+  if (isNaN(d.getTime())) {
+    return "";
+  }
+
+  let hours = d.getHours();
+  const minutes = d.getMinutes().toString().padStart(2, "0");
   const isPM = hours >= 12;
 
-  // Convert to 12-hour format
-  hours = hours % 12;
-  hours = hours ? hours : 12; // 0 -> 12
+  hours = hours % 12 || 12;
 
-  const period = isPM ? "م" : "ص";
-
-  return `${hours}:${minutes} ${period}`;
+  return `${hours}:${minutes} ${isPM ? "م" : "ص"}`;
 }
