@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
 import { redirect } from "next/navigation";
+import EmptyConversation from "@/components/conversations/EmptyConversation";
 
 // import ChatMasseg from "@/components/chat/ChatMasseg";
 async function page() {
@@ -10,7 +11,7 @@ async function page() {
   });
 
   if (!session?.user) redirect("/login");
-  return <p>dc</p>;
+  return <EmptyConversation />;
 }
 
 export default page;

@@ -6,7 +6,6 @@ import { Badge } from "../ui/badge";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { FullConversationstype } from "@/app/types";
-import { format } from "date-fns";
 import useOthouUser from "@/app/hook/useOthouUser";
 import { MessageTime } from "../chat/Users";
 interface ConversationBoxProps {

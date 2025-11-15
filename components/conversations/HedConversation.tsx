@@ -2,8 +2,6 @@
 
 import useOthouUser from "@/app/hook/useOthouUser";
 import { Conversations, User } from "@prisma/client";
-import { WifiHighIcon } from "lucide-react";
-import Link from "next/link";
 import { useMemo } from "react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { setstring } from "@/utils/format";

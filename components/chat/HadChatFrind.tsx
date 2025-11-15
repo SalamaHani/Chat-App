@@ -10,7 +10,7 @@ function HadChatFrind() {
         <div className="flex items-center justify-between w-full gap-2 px-4">
           <p className=" italic font-medium text-xl">Chats</p>
           <div className="flex items-center justify-between  gap-6 ">
-            <NewChat />
+            <NewChat isButton={false} />
             <Filterchat />
           </div>
         </div>

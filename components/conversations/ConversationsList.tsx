@@ -5,11 +5,16 @@ import HadChatFrind from "../chat/HadChatFrind";
 import SearshChat from "../chat/SearshChat";
 import ConversationBox from "./ConversationBox";
 import useConverstion from "@/app/hook/useConverstion";
+import EmptyConversation from "./EmptyConversation";
+import EmptyConversationList from "./EmptyConversationList";
 interface Conversationsporps {
   intialItems: FullConversationstype[];
 }
 const ConversationsList: React.FC<Conversationsporps> = ({ intialItems }) => {
   const { isOpen, converstionId } = useConverstion();
+   if(intialItems.length == 0){
+            return <EmptyConversationList/>
+          }
   return (
     <div className="rounded-xl  bg-neutral-200 dark:bg-neutral-900 rounded-tr-none rounded-br-none overflow-hidden h-full  w-full">
       <HadChatFrind />
@@ -19,7 +24,10 @@ const ConversationsList: React.FC<Conversationsporps> = ({ intialItems }) => {
           "space-y-2 relative px-2 bg-white dark:bg-neutral-900 min-h-120 max-h-120 overflow-y-auto"
         }
       >
-        {intialItems.map((item) => {
+        
+        {
+        intialItems.map((item) => {
+          
           return (
             <ConversationBox
               data={item}

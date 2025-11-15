@@ -17,7 +17,7 @@ function Body() {
             );
           })} */}
         </div>
-        <div className="flex h-[52px]  flex-1  justify-center items-center">
+        <div className="flex h-[52px] rounded-br-xl bg-white dark:bg-neutral-900  flex-1  justify-center items-center">
           <FormChat />
         </div>
       </div>

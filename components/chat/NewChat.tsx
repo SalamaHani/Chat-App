@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -10,18 +10,23 @@ import {
 } from "../animate-ui/components/radix/dialog";
 import { AnimateIcon } from "../animate-ui/icons/icon";
 import { CirclePlus } from "../animate-ui/icons/circle-plus";
+import { Button } from "../ui/button";
 
-function NewChat() {
+export default function NewChat({ isButton }: { isButton?: boolean }) {
   return (
-    <Dialog >
+    <Dialog>
       <DialogTrigger>
-        <AnimateIcon animateOnHover>
-          <CirclePlus size={20} />
-        </AnimateIcon>
+        {isButton ? (
+          <Button>new chat</Button>
+        ) : (
+          <AnimateIcon animateOnHover>
+            <CirclePlus size={20} />
+          </AnimateIcon>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New Chat</DialogTitle>
+          <DialogTitle>new chat</DialogTitle>
           <DialogDescription>Dialog Description</DialogDescription>
         </DialogHeader>
         <p>Dialog Content</p>
@@ -32,5 +37,3 @@ function NewChat() {
     </Dialog>
   );
 }
-
-export default NewChat;

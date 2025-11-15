@@ -19,7 +19,7 @@ function FormChat() {
   });
   const onSubmit: SubmitHandler<FieldValues> = (data) => {};
   return (
-    <div className="py-4 px-4  bg-white dark:bg-neutral-900 rounded-br-xl  flex items-center justify-center gap-2 w-full">
+    <div className="py-4 px-4   rounded-br-xl  flex items-center justify-center gap-2 w-full">
       <Typeinpust />
       <form
         onSubmit={handleSubmit(onSubmit)}

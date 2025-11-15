@@ -22,6 +22,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useParams } from "next/navigation";
 
 // This is sample data.
 const data = {
@@ -55,8 +56,8 @@ const data = {
       isActive: true,
     },
     {
-      title: "Calls",
-      url: "/calls",
+      title: "Conversations",
+      url: "/conversations",
       icon: PhoneCall,
       isActive: false,
     },
@@ -95,6 +96,7 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   session: Session | null;
 }
 export function AppSidebar({ session, ...props }: AppSidebarProps) {
+  const parmses = useParams()
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
