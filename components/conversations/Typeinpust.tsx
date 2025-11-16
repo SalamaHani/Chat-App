@@ -12,6 +12,7 @@ import {
   MenuTrigger,
 } from "../animate-ui/components/base/menu";
 import { Link } from "../animate-ui/icons/link";
+import { Ellipsis } from "../animate-ui/icons/ellipsis";
 export const currencies = [
   {
     name: "Photo & vdio",
@@ -42,9 +43,9 @@ export const currencies = [
 function Typeinpust() {
   return (
     <Menu>
-      <MenuTrigger className="rounded-xl p-2 bg-sidebar-primary transition">
+      <MenuTrigger className="rounded-xl p-2  transition">
         <AnimateIcon animateOnHover>
-          <Link color="#f0f9ff" size={20} />
+          <Ellipsis className="text-sidebar-primary" size={23} />
         </AnimateIcon>
       </MenuTrigger>
       <MenuPanel>

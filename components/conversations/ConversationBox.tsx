@@ -67,8 +67,8 @@ export default function ConversationBox({
     <div
       onClick={handelCilek}
       className={`${
-        isActive ? `bg-neutral-900` : `bg-none`
-      } hover:bg-neutral-800 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
+        isActive ? ` bg-neutral-100 dark:bg-neutral-800` : `bg-none`
+      } dark:hover:bg-neutral-800  hover:bg-neutral-50 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
     >
       <div className="flex items-center gap-2">
         <Avatar className="h-12 w-12 rounded-lg">

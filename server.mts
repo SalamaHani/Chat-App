@@ -19,7 +19,6 @@ app.prepare().then(() => {
       console.log(`User ${usrname} join room ${room}`);
       socket.to(room).emit(`user_join ,${usrname} join room ${room}`);
     });
-
     socket.on("message", (message, sender) => {
       socket.join(message);
       console.log(`Message form ${message} user ${sender}`);

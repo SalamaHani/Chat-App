@@ -1,15 +1,6 @@
 "use client";
-
 import * as React from "react";
-import {
-  AudioWaveform,
-  CircleFadingPlus,
-  Command,
-  GalleryVerticalEnd,
-  MessageCircleMore,
-  PhoneCall,
-  Settings2,
-} from "lucide-react";
+import { AudioWaveform, Command, GalleryVerticalEnd } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -22,7 +13,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { useParams } from "next/navigation";
+import useRoutes from "@/app/hook/useRoute";
 
 // This is sample data.
 const data = {
@@ -48,62 +39,20 @@ const data = {
       plan: "Free",
     },
   ],
-  navMain: [
-    {
-      title: "Chats",
-      url: "/chats",
-      icon: MessageCircleMore,
-      isActive: true,
-    },
-    {
-      title: "Conversations",
-      url: "/conversations",
-      icon: PhoneCall,
-      isActive: false,
-    },
-    {
-      title: "My condition",
-      url: "/condition",
-      icon: CircleFadingPlus,
-      isActive: false,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
 };
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   session: Session | null;
 }
 export function AppSidebar({ session, ...props }: AppSidebarProps) {
-  const parmses = useParams()
+  const routes = useRoutes();
+  console.log(routes);
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={routes} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={session?.user} />

@@ -5,6 +5,8 @@ import MessageInput from "./MessageInput";
 import { AnimateIcon } from "../animate-ui/icons/icon";
 import Typeinpust from "./Typeinpust";
 import { SendHorizontal } from "../animate-ui/icons/send-horizontal";
+import axios from "axios";
+import useConverstion from "@/app/hook/useConverstions";
 
 function FormChat() {
   const {
@@ -17,7 +19,14 @@ function FormChat() {
       message: "",
     },
   });
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {};
+  const { conversationId } = useConverstion();
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    setValue("message", "", { shouldValidate: true });
+    axios.post("/api/messages", {
+      ...data,
+      conversationId,
+    });
+  };
   return (
     <div className="py-4 px-4   rounded-br-xl  flex items-center justify-center gap-2 w-full">
       <Typeinpust />
