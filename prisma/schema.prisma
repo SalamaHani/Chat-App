@@ -66,18 +66,16 @@ model Message {
   body      String?
   image     String?
   createdAt DateTime @default(now())
-  chatId    String   @db.ObjectId
-  updatedAt DateTime @db.Date
-
+  chatId    String?  @db.ObjectId
   seenIds String[]
   seen    User[]   @relation("Seen", fields: [seenIds], references: [id])
 
   conversationId String        @db.ObjectId
   conversation   Conversations @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-
   senderId String
   sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
 }
+
 model Session {
   id         String    @id @map("_id")
   token     String   @unique
@@ -91,24 +89,6 @@ model Session {
   @@map("session")
 }
 
-// model Chat {
-//   id        String        @id @default(auto()) @map("_id") @db.ObjectId
-//   name      String?
-//   isGroup   Boolean       @default(false)
-//   members   ChatMember[]  @relation("ChatMembers")
-//   messages  Message[]     @relation("ChatMessages")
-//   createdAt DateTime      @default(now())
-//   updatedAt DateTime  @default(now())
-// }
-
-// model ChatMember {
-//   id       String @id @default(auto()) @map("_id") @db.ObjectId
-//   userId   String @db.ObjectId
-//   chatId   String @db.ObjectId
-//   role     String?
-//   user     User @relation("userChatMembers", fields: [userId], references: [id])
-//   chat     Chat @relation("ChatMembers", fields: [chatId], references: [id])
-// }
 enum MessageType {
   TEXT
   IMAGE

@@ -1,6 +1,5 @@
 "use client";
 import React, { useCallback, useMemo } from "react";
-import { setstring } from "@/utils/format";
 import { Badge } from "../ui/badge";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -72,23 +71,20 @@ export default function ConversationBox({
     >
       <div className="flex items-center gap-2">
         <Avatar user={data} />
-        {/* <Avatar className="h-12 w-12 rounded-lg">
-          <AvatarFallback className="rounded-full">
-            {setstring(data?.name || othuruser?.name)}
-          </AvatarFallback>
-        </Avatar> */}
         <div>
           <div className="text-sm font-semibold">
             {data?.name || othuruser?.name}
           </div>
           <div
-            className={`text-sm  truncate ${
+            className={` text-sm  truncate  ${
               hasSeen
                 ? `text-gray-500 dark:text-white`
                 : `text-gray-500 font-medium`
             }`}
           >
-            {lasetMsessageText}
+            {lasetMsessageText.length > 30
+              ? lasetMsessageText.substring(0, 30) + "...."
+              : lasetMsessageText}
           </div>
         </div>
       </div>

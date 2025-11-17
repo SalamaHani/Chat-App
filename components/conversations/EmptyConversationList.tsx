@@ -1,11 +1,8 @@
 import React from "react";
-import HadChatFrind from "../chat/HadChatFrind";
-
 
 function EmptyConversationList() {
   return (
     <div className="rounded-xl  bg-neutral-200 dark:bg-neutral-900 rounded-tr-none rounded-br-none overflow-hidden h-full  w-full">
-      <HadChatFrind />
       <div
         className={
           "space-y-2 relative px-2 bg-white dark:bg-neutral-900 min-h-130 max-h-150 overflow-y-auto"

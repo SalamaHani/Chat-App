@@ -55,5 +55,5 @@ export function formatTimeArabic(date: Date | string | null | undefined) {
 
   hours = hours % 12 || 12;
 
-  return `${hours}:${minutes} ${isPM ? "م" : "ص"}`;
+  return `${hours}:${minutes} ${isPM ? "pm" : "am"}`;
 }

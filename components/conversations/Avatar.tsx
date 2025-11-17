@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 
 interface AvaterProps {
-  user?: User;
+  user?: User | null;
 }
 const Avatar: React.FC<AvaterProps> = ({ user }) => {
   return (

@@ -14,7 +14,6 @@ async function page({ params }: IdPrames) {
   const conversation = await getCaonversationById(conversationId);
   console.log(conversation);
   const messages = await getMessages(conversationId);
-  console.log(messages);
 
   if (!conversation) {
     return <EmptyConversation />;
@@ -29,7 +28,7 @@ async function page({ params }: IdPrames) {
         <div className="flex flex-1  ">
           <div className=" w-full h-full">
             <HedConversation conversation={conversation} />
-            <Body />
+            <Body  intionalMesssages={messages}/>
           </div>
         </div>
       </div>

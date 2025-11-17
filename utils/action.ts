@@ -1,8 +1,7 @@
 "use server";
 import db from "./db";
 import { getSession } from "./users";
-export const GetAllUsers = async () => {};
-export const faveretlisting = async () => {
+export const getAllUsers = async () => {;
   const session = await getSession();
   const userId = session?.session.userId;
   console.log(userId);
@@ -10,7 +9,7 @@ export const faveretlisting = async () => {
     where: { id: { not: userId } },
   });
   return Users;
-};
+}
 
 export const getCuruentUser = async () => {
   try {

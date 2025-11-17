@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useCallback, useState } from "react";
-import { formatTimeArabic, setstring } from "@/utils/format";
+import { formatTimeArabic } from "@/utils/format";
 import { User } from "@prisma/client";
-import { Badge } from "../ui/badge";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Avatar from "../conversations/Avatar";
 
 interface PropsUser {
   user: User | null;
-  key: string;
+  closeDialog: () => void;
 }
 export function MessageTime({ createdAt }: { createdAt: Date }) {
   return (
@@ -20,7 +19,7 @@ export function MessageTime({ createdAt }: { createdAt: Date }) {
   );
 }
 
-function Users({ user, key }: PropsUser) {
+function Users({ user, closeDialog }: PropsUser) {
   const routur = useRouter();
   const [isLoding, setIsloding] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -32,17 +31,16 @@ function Users({ user, key }: PropsUser) {
       })
       .then((data) => {
         routur.push(`/conversations/${data.data.id}`);
-        console.log("ronde");
+        closeDialog();
         setIsActive(user?.id == data.data.id);
       })
       .finally(() => setIsloding(false));
-  }, [user, routur]);
+  }, [user, routur, closeDialog]);
   if (isLoding) {
     return <p>45</p>;
   }
   return (
     <div
-      key={key}
       onClick={handelCilek}
       className={`${
         isActive ? `bg-neutral-100 dark:bg-neutral-800` : `bg-none`

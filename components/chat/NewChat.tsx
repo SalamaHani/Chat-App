@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -8,17 +9,20 @@ import {
 import { AnimateIcon } from "../animate-ui/icons/icon";
 import { CirclePlus } from "../animate-ui/icons/circle-plus";
 import { Button } from "../ui/button";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Input } from "../ui/input";
-import { faveretlisting } from "@/utils/action";
 import Users from "./Users";
 import { UsersRound } from "../animate-ui/icons/users-round";
 import { Separator } from "../ui/separator";
-
-async function NewChat({ isButton }: { isButton?: boolean }) {
-  const users = await faveretlisting();
+import React, { useState } from "react";
+import { ScrollArea } from "../ui/scroll-area";
+import { User } from "@prisma/client";
+interface NewchatProps {
+  users: User[];
+  isButton?: boolean;
+}
+const NewChat: React.FC<NewchatProps> = ({ users, isButton }) => {
+  const [open, setOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         {isButton ? (
           <Button>New Chat</Button>
@@ -28,12 +32,12 @@ async function NewChat({ isButton }: { isButton?: boolean }) {
           </AnimateIcon>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[400px] ">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[400px] p-0 ">
+        <DialogHeader className="p-4">
           <DialogTitle>New Chat</DialogTitle>
         </DialogHeader>
         <div className=" overflow-hidden h-full  w-full">
-          <div className="  flex-1 flex  flex-col space-y-2 p-4  bg-white dark:bg-neutral-950  shrink-0  gap-2  ">
+          <div className="  flex-1 flex  flex-col p-4  bg-white dark:bg-neutral-950  shrink-0  gap-2  ">
             <div
               className={`${
                 true ? ` bg-neutral-100 dark:bg-neutral-800` : `bg-none`
@@ -53,12 +57,20 @@ async function NewChat({ isButton }: { isButton?: boolean }) {
               </div>
             </div>
           </div>
-
-          <div className="px-6 mt-6">
-            <p className=" italic font-medium text-sm">All Contact</p>
-            <Separator />
-          </div>
-          <div
+          <ScrollArea className="h-90 w-full rounded-md ">
+            <div className="p-4">
+              <h4 className="mb-4 text-sm leading-none font-medium">
+                All Contact
+              </h4>
+              <Separator className="my-2" />
+              {users.map((user) => (
+                <React.Fragment key={user.id}>
+                  <Users user={user} closeDialog={() => setOpen(false)} />
+                </React.Fragment>
+              ))}
+            </div>
+          </ScrollArea>
+          {/* <div
             className={
               "space-y-2 relative px-2 min-h-80 max-h-80 overflow-y-auto"
             }
@@ -66,10 +78,10 @@ async function NewChat({ isButton }: { isButton?: boolean }) {
             {users.map((user) => {
               return <Users key={user.id} user={user} />;
             })}
-          </div>
+          </div> */}
         </div>
       </DialogContent>
     </Dialog>
   );
-}
+};
 export default NewChat;

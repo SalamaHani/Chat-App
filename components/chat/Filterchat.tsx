@@ -1,16 +1,12 @@
-import React from "react";
 
 import { AnimateIcon } from "../animate-ui/icons/icon";
 import { SlidersHorizontal } from "../animate-ui/icons/sliders-horizontal";
 import { Heart, MessageSquareDot, User, Users, UserX } from "lucide-react";
-import { DropdownMenuSeparator } from "../ui/dropdown-menu";
 import {
   Menu,
   MenuGroup,
   MenuItem,
   MenuPanel,
-  MenuSeparator,
-  MenuShortcut,
   MenuTrigger,
 } from "../animate-ui/components/base/menu";
 export const currencies = [

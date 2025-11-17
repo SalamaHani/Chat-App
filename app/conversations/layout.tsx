@@ -16,7 +16,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import ConversationsList from "@/components/conversations/ConversationsList";
-import { getConversations } from "@/utils/action";
+import { getAllUsers, getConversations } from "@/utils/action";
 import HadChatFrind from "@/components/chat/HadChatFrind";
 import SearshChat from "@/components/chat/SearshChat";
 export default async function ChatLayout({
@@ -29,6 +29,7 @@ export default async function ChatLayout({
   });
   const Conversations = await getConversations();
   if (!session?.user) redirect("/login");
+  const users = await getAllUsers();
   return (
     <SidebarProvider>
       <AppSidebar session={session} />
@@ -40,7 +41,7 @@ export default async function ChatLayout({
         </header>
         <div className="flex w-full  flex-1  pl-4 pt-0">
           <div className="rounded-xl  bg-neutral-200 dark:bg-neutral-900 rounded-tr-none rounded-br-none overflow-hidden h-full  w-full">
-            <HadChatFrind />
+            <HadChatFrind users={users} />
             <SearshChat />
             <ConversationsList intialItems={Conversations} />
           </div>

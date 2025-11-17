@@ -4,6 +4,10 @@ import useOthouUser from "@/app/hook/useOthouUser";
 import { Conversations, User } from "@prisma/client";
 import { useMemo } from "react";
 import Avatar from "./Avatar";
+import { AnimateIcon } from "../animate-ui/icons/icon";
+import { PhoneCall } from "../animate-ui/icons/phone-call";
+import { Search } from "../animate-ui/icons/search";
+import { Cctv } from "../animate-ui/icons/cctv";
 
 interface HedConversationProps {
   conversation: Conversations & {
@@ -20,23 +24,29 @@ const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
   }, [conversation]);
   return (
     <header className="flex rounded-t-xl rounded-tl-none    bg-white dark:bg-neutral-900 h-18  shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
-      <div className="flex items-center gap-2 px-4">
-        {/* <Link
-          className=" block text-sky-500 hover:text-sky-600 transition  cursor-pointer"
-          href={"/conversation"}
-        >
-          <WifiHighIcon size={23} />
-        </Link> */}
-        <Avatar user={othuruser} />
-        <div>
-          <div className="text-sm font-semibold">
-            {conversation.name || othuruser.name}
-          </div>
-          <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
-            {textstust}
+      <div className="flex items-center justify-between w-full gap-2 px-4">
+        <div className="flex items-center  gap-2 px-4">
+          <Avatar user={othuruser} />
+          <div>
+            <div className="text-sm font-semibold">
+              {conversation.name || othuruser.name}
+            </div>
+            <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
+              {textstust}
+            </div>
           </div>
         </div>
-        {/* <div className="text-sm font-light text-neutral-500">{textstust}</div> */}
+        <div className="flex items-center gap-4 px-4">
+          <AnimateIcon animateOnHover>
+            <PhoneCall className="cursor-pointer" size={20} />
+          </AnimateIcon>
+          <AnimateIcon animateOnHover>
+            <Cctv className="cursor-pointer" size={20} />
+          </AnimateIcon>
+          <AnimateIcon animateOnHover>
+            <Search className="cursor-pointer" size={20} />
+          </AnimateIcon>
+        </div>
       </div>
     </header>
   );

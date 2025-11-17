@@ -3,10 +3,11 @@ import React from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import MessageInput from "./MessageInput";
 import { AnimateIcon } from "../animate-ui/icons/icon";
-import Typeinpust from "./Typeinpust";
 import { SendHorizontal } from "../animate-ui/icons/send-horizontal";
 import axios from "axios";
 import useConverstion from "@/app/hook/useConverstions";
+import { CldUploadButton } from "next-cloudinary";
+import { ImageIcon } from "lucide-react";
 
 function FormChat() {
   const {
@@ -27,9 +28,22 @@ function FormChat() {
       conversationId,
     });
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handelUlod = (resault: any) => {
+    axios.post("/api/messages", {
+      image: resault?.info?.secure_url,
+      conversationId,
+    });
+  };
   return (
     <div className="py-4 px-4   rounded-br-xl  flex items-center justify-center gap-2 w-full">
-      <Typeinpust />
+      <CldUploadButton
+        options={{ maxFiles: 1 }}
+        onSuccess={handelUlod}
+        uploadPreset="chatimge"
+      >
+        <ImageIcon className="text-sidebar-primary" size={23} />
+      </CldUploadButton>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex items-center gap-2 w-full"

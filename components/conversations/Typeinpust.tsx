@@ -1,9 +1,9 @@
-import React from "react";
+"use client";
 
 import { AnimateIcon } from "../animate-ui/icons/icon";
-import { SlidersHorizontal } from "../animate-ui/icons/sliders-horizontal";
+import { CldUploadButton } from "next-cloudinary";
 import { Eraser, Camera, User, Image, File } from "lucide-react";
-import { DropdownMenuSeparator } from "../ui/dropdown-menu";
+
 import {
   Menu,
   MenuGroup,
@@ -11,33 +11,12 @@ import {
   MenuPanel,
   MenuTrigger,
 } from "../animate-ui/components/base/menu";
-import { Link } from "../animate-ui/icons/link";
 import { Ellipsis } from "../animate-ui/icons/ellipsis";
 export const currencies = [
   {
     name: "Photo & vdio",
     value: "Photo & vdio",
     icon: Image,
-  },
-  {
-    name: "Camera",
-    value: "Camera",
-    icon: Camera,
-  },
-  {
-    name: "Contact",
-    value: "Contact",
-    icon: User,
-  },
-  {
-    name: "Ducomnet",
-    value: "Ducomnet",
-    icon: File, // no specific icon, fallback to Circle
-  },
-  {
-    name: "Drwing",
-    value: "Drwing",
-    icon: Eraser,
   },
 ];
 function Typeinpust() {
@@ -61,10 +40,15 @@ function Typeinpust() {
                     : ""
                 }
               >
-                <div className="w-full flex justify-between items-center">
-                  {cur.value}
-                  <Iconse className="w-4 h-4" />
-                </div>
+                <CldUploadButton
+                  options={{ maxFiles: 1 }}
+                  uploadPreset="chatimge"
+                >
+                  <div className="w-full flex justify-between items-center">
+                    Photo & vdio
+                    <Iconse className="w-4 h-4" />
+                  </div>
+                </CldUploadButton>
               </MenuItem>
             );
           })}
