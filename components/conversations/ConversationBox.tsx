@@ -1,6 +1,5 @@
 "use client";
 import React, { useCallback, useMemo } from "react";
-import { Avatar, AvatarFallback } from "../ui/avatar";
 import { setstring } from "@/utils/format";
 import { Badge } from "../ui/badge";
 import { useRouter } from "next/navigation";
@@ -8,6 +7,7 @@ import { authClient } from "@/lib/auth-client";
 import { FullConversationstype } from "@/app/types";
 import useOthouUser from "@/app/hook/useOthouUser";
 import { MessageTime } from "../chat/Users";
+import Avatar from "./Avatar";
 interface ConversationBoxProps {
   data: FullConversationstype;
   isActive?: boolean;
@@ -71,11 +71,12 @@ export default function ConversationBox({
       } dark:hover:bg-neutral-800  hover:bg-neutral-50 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
     >
       <div className="flex items-center gap-2">
-        <Avatar className="h-12 w-12 rounded-lg">
+        <Avatar user={data} />
+        {/* <Avatar className="h-12 w-12 rounded-lg">
           <AvatarFallback className="rounded-full">
             {setstring(data?.name || othuruser?.name)}
           </AvatarFallback>
-        </Avatar>
+        </Avatar> */}
         <div>
           <div className="text-sm font-semibold">
             {data?.name || othuruser?.name}

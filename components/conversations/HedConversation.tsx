@@ -3,8 +3,7 @@
 import useOthouUser from "@/app/hook/useOthouUser";
 import { Conversations, User } from "@prisma/client";
 import { useMemo } from "react";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { setstring } from "@/utils/format";
+import Avatar from "./Avatar";
 
 interface HedConversationProps {
   conversation: Conversations & {
@@ -28,11 +27,7 @@ const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
         >
           <WifiHighIcon size={23} />
         </Link> */}
-        <Avatar className="h-12 w-12 rounded-lg">
-          <AvatarFallback className="rounded-full">
-            {setstring(conversation.name || othuruser.name)}
-          </AvatarFallback>
-        </Avatar>
+        <Avatar user={othuruser} />
         <div>
           <div className="text-sm font-semibold">
             {conversation.name || othuruser.name}

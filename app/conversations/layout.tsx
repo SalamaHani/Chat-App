@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/sidebar";
 import ConversationsList from "@/components/conversations/ConversationsList";
 import { getConversations } from "@/utils/action";
+import HadChatFrind from "@/components/chat/HadChatFrind";
+import SearshChat from "@/components/chat/SearshChat";
 export default async function ChatLayout({
   children,
 }: {
@@ -37,7 +39,11 @@ export default async function ChatLayout({
           </div>
         </header>
         <div className="flex w-full  flex-1  pl-4 pt-0">
-          <ConversationsList intialItems={Conversations} />
+          <div className="rounded-xl  bg-neutral-200 dark:bg-neutral-900 rounded-tr-none rounded-br-none overflow-hidden h-full  w-full">
+            <HadChatFrind />
+            <SearshChat />
+            <ConversationsList intialItems={Conversations} />
+          </div>
         </div>
       </SidebarInset>
       <Providers>{children}</Providers>

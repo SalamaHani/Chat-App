@@ -1,12 +1,10 @@
-/* eslint-disable react/jsx-no-undef */
+
 import React from "react";
 import HadChatFrind from "./HadChatFrind";
 import SearshChat from "./SearshChat";
 import { faveretlisting } from "@/utils/action";
 import Users from "./Users";
 
-// import { AnimateIcon } from "../animate-ui/icons/icon";
-// import { SlidersHorizontal } from "../animate-ui/icons/sliders-horizontal";
 import { Highlight } from "../animate-ui/primitives/effects/highlight";
 import {
   Menu,

@@ -1,12 +1,12 @@
 "use client";
-import { Avatar } from "@radix-ui/react-avatar";
+
 import React, { useCallback, useState } from "react";
-import { AvatarFallback } from "../ui/avatar";
 import { formatTimeArabic, setstring } from "@/utils/format";
 import { User } from "@prisma/client";
 import { Badge } from "../ui/badge";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Avatar from "../conversations/Avatar";
 
 interface PropsUser {
   user: User | null;
@@ -38,34 +38,24 @@ function Users({ user, key }: PropsUser) {
       .finally(() => setIsloding(false));
   }, [user, routur]);
   if (isLoding) {
-    return <Avatar>45</Avatar>;
+    return <p>45</p>;
   }
   return (
     <div
       key={key}
       onClick={handelCilek}
       className={`${
-        isActive ? `bg-[#1e293b]` : `bg-none`
-      } hover:bg-[#1e293b] flex items-center justify-between  gap-5 rounded-sm  p-2`}
+        isActive ? `bg-neutral-100 dark:bg-neutral-800` : `bg-none`
+      } dark:hover:bg-neutral-800  hover:bg-neutral-50 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
     >
       <div className="flex items-center gap-2">
-        <Avatar className="h-12 w-12 rounded-lg">
-          <AvatarFallback className="rounded-full">
-            {setstring(user?.name || "")}
-          </AvatarFallback>
-        </Avatar>
+        <Avatar user={user} />
         <div>
           <div className="text-sm font-semibold">{user?.name}</div>
           <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
             {user?.email}
           </div>
         </div>
-      </div>
-      <div className="flex flex-col items-end justify-around size-12  ">
-        <MessageTime createdAt={user?.createdAt ?? Date.now} />
-        <Badge className="h-4 min-w-4 rounded-full px-1 font-mono tabular-nums">
-          8
-        </Badge>
       </div>
     </div>
   );
