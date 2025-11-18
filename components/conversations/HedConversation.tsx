@@ -8,6 +8,7 @@ import { AnimateIcon } from "../animate-ui/icons/icon";
 import { PhoneCall } from "../animate-ui/icons/phone-call";
 import { Search } from "../animate-ui/icons/search";
 import { Cctv } from "../animate-ui/icons/cctv";
+import Ditales from "./Ditales";
 
 interface HedConversationProps {
   conversation: Conversations & {
@@ -46,6 +47,7 @@ const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
           <AnimateIcon animateOnHover>
             <Search className="cursor-pointer" size={20} />
           </AnimateIcon>
+          <Ditales conversation={conversation} />
         </div>
       </div>
     </header>

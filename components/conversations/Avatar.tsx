@@ -2,6 +2,7 @@
 
 import { User } from "@prisma/client";
 import Image from "next/image";
+import { SocketIndectors } from "../socketIndectors";
 
 interface AvaterProps {
   user?: User | null;
@@ -20,7 +21,7 @@ const Avatar: React.FC<AvaterProps> = ({ user }) => {
           fill
         />
       </div>
-      <span className=" absolute block rounded-full bg-green-500 ring-2  ring-white right-0 top-0 h-2 w-2 " />
+      <SocketIndectors />
     </div>
   );
 };
