@@ -19,15 +19,18 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
   //   .filter((user) => user.email !== data.sender.email)
   //   .map((user) => user.name)
   //   .join(", ");
+  // const otherSeen = (data.seen || []).filter((u) => u.id !== data.sender.id);
+
   const hasSeen = (data.seen || []).some(
     (user) => user.email !== data.sender.email
   );
-  console.log(hasSeen);
   const contener = clsx("flex gap-3 p-4", isOnw && "justify-end");
   const body = clsx("flex flex-col gap-2", isOnw && "item-end");
   const message = clsx(
-    "text-sm w-fit rounded-sm max-w-md  overflow-hidden",
-    isOnw ? "bg-sky-500 text-white" : "bg-gray-100",
+    "text-sm  max-w-md  overflow-hidden relative max-w-[75%] px-3 py-2 rounded-xl  shadow-[0_2px_4px_rgba(0,0,0,0.18)] ",
+    isOnw
+      ? "bg-sidebar-primary text-white  rounded-br-none"
+      : "bg-white dark:bg-neutral-800 rounded-bl-none",
     data.image ? "p-0 rounded-md " : "px-3 py-2 rounded-full"
   );
   return (
@@ -48,14 +51,18 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
             )}
           </div>
           <div className="flex items-center gap-1">
-            {isOnw && hasSeen ? (
-              <div className="text-xs text-gray-500 font-light">
-                <CheckCheck size={11} className="text-sky-500" />
-              </div>
-            ) : (
-              <div className="text-xs text-gray-500 font-light">
-                <Check size={11} className="text-neutral-500" />
-              </div>
+            {isOnw && (
+              <>
+                {hasSeen ? (
+                  <div className="text-xs text-gray-500 font-light">
+                    <CheckCheck size={11} className="text-sky-500" />
+                  </div>
+                ) : (
+                  <div className="text-xs text-gray-500 font-light">
+                    <Check size={11} className="text-neutral-500" />
+                  </div>
+                )}
+              </>
             )}
             <div className="text-sm text-gray-400">
               <MessageTime createdAt={data?.createdAt ?? Date.now} />

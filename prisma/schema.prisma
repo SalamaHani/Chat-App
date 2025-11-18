@@ -69,7 +69,6 @@ model Message {
   chatId    String?  @db.ObjectId
   seenIds String[]
   seen    User[]   @relation("Seen", fields: [seenIds], references: [id])
-
   conversationId String        @db.ObjectId
   conversation   Conversations @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   senderId String

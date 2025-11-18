@@ -6,6 +6,8 @@ import useConverstions from "@/app/hook/useConverstions";
 import MassegChat from "../chat/MassegChat";
 import axios from "axios";
 import { ScrollArea } from "../ui/scroll-area";
+import { useTheme } from "next-themes";
+// import imgese from "../../public/images/download.jpg";
 interface MessagesProps {
   intionalMesssages: FullMessageType[];
 }
@@ -13,13 +15,23 @@ const Body: React.FC<MessagesProps> = ({ intionalMesssages }) => {
   const [messages, setMessages] = useState(intionalMesssages);
   const bottonRef = useRef<HTMLDivElement>(null);
   const { conversationId } = useConverstions();
+  const { theme } = useTheme();
+  const backgroundImage =
+    theme === "dark"
+      ? "url('/images/download.jpg')"
+      : "url('/images/🔥 Whatsapp Backgrounds on WallpaperSafari.jpg')";
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
   return (
     <div className=" flex  rounded-xl w-full ">
       <div className="w-full h-full overflow-hidden  ">
-        <ScrollArea className="h-125 w-full rounded-md  ">
+        <ScrollArea
+          style={{
+            backgroundImage,
+          }}
+          className={`h-125 w-full rounded-md    `}
+        >
           {messages.map((msg, index) => {
             return (
               <MassegChat
