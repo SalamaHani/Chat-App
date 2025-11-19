@@ -9,7 +9,7 @@ import Avatar from "../conversations/Avatar";
 
 interface PropsUser {
   user: User | null;
-  closeDialog: () => void;
+  closeDialog?: () => void;
 }
 export function MessageTime({ createdAt }: { createdAt: Date }) {
   return (

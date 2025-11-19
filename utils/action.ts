@@ -17,15 +17,15 @@ export const getCuruentUser = async () => {
     if (!session?.user?.email) {
       return null;
     }
-    const cureuntUser = await db.user.findUnique({
+    const currentUser  = await db.user.findUnique({
       where: {
         email: session?.user?.email,
       },
     });
-    if (!cureuntUser) {
+    if (!currentUser ) {
       return null;
     }
-    return cureuntUser;
+    return currentUser ;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {

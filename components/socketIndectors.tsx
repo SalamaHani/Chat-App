@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 
 export const SocketIndectors = () => {
   const { isConnected } = useSocket();
-  if (!isConnected) {
+  if (isConnected) {
     return (
       <span className=" absolute block rounded-full bg-yellow-500 ring-2  ring-white right-0 top-0 h-2 w-2 " />
     );
@@ -13,4 +13,3 @@ export const SocketIndectors = () => {
     <span className=" absolute block rounded-full bg-green-500 ring-2  ring-white right-0 top-0 h-2 w-2 " />
   );
 };
-

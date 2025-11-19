@@ -21,9 +21,12 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
   //   .join(", ");
   // const otherSeen = (data.seen || []).filter((u) => u.id !== data.sender.id);
 
-  const hasSeen = (data.seen || []).some(
-    (user) => user.email !== data.sender.email
-  );
+  // const hasSeen = (data.seen || []).some(
+  //   (user) => user.email !== data.sender.email
+  // );
+  const hasSeen = useMemo(() => {
+    return data.seen.length == 2;
+  }, [data]);
   const contener = clsx("flex gap-3 p-4", isOnw && "justify-end");
   const body = clsx("flex flex-col gap-2", isOnw && "item-end");
   const message = clsx(

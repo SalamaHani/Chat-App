@@ -57,3 +57,24 @@ export function formatTimeArabic(date: Date | string | null | undefined) {
 
   return `${hours}:${minutes} ${isPM ? "pm" : "am"}`;
 }
+export function formatLastMessageDate(date: Date | string) {
+  const d = new Date(date);
+  const now = new Date();
+
+  const diffTime = now.getTime() - d.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
+
+  // Return weekday name if within last 7 days
+  if (diffDays < 7) {
+    return d.toLocaleDateString("en-US", { weekday: "long" });
+  }
+
+  // Otherwise format as short date
+  return d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}

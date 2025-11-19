@@ -66,8 +66,8 @@ export default function ConversationBox({
     <div
       onClick={handelCilek}
       className={`${
-        isActive ? ` bg-neutral-100 dark:bg-neutral-800` : `bg-none`
-      } dark:hover:bg-neutral-800  hover:bg-neutral-50 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
+        isActive ? ` bg-neutral-200 dark:bg-neutral-800` : `bg-none`
+      } dark:hover:bg-neutral-800  hover:bg-neutral-100 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
     >
       <div className="flex items-center gap-2">
         <Avatar user={data} />
@@ -88,11 +88,13 @@ export default function ConversationBox({
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-end justify-around size-12  ">
+      <div className="flex flex-col items-end justify-around size-13  ">
         <MessageTime createdAt={lastMessage?.createdAt ?? Date.now} />
-        <Badge className="h-4 min-w-4 rounded-full bg-sidebar-primary px-1 font-mono tabular-nums">
-          {countlasmasseags != undefined ? countlasmasseags : 2}
-        </Badge>
+        {countlasmasseags != undefined ? (
+          <Badge className="h-4 min-w-4 rounded-full bg-sidebar-primary px-1 font-mono tabular-nums">
+            {countlasmasseags}
+          </Badge>
+        ) : null}
       </div>
     </div>
   );

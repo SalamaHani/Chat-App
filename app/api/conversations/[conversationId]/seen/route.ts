@@ -1,55 +1,52 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/utils/db";
 import { getCuruentUser } from "@/utils/action";
-interface Iparmas {
-  conversationId?: string;
+
+interface IParams {
+  params: Promise<{
+    conversationId: string;
+  }>;
 }
-export async function name(requset: Request, { parmas }: { parmas: Iparmas }) {
+
+export async function POST(request: Request, { params }: IParams) {
   try {
-    const curentuser = await getCuruentUser();
-    const { conversationId } = parmas;
-    if (!curentuser?.email || !conversationId) {
-      return new NextResponse("Unauthrized", { status: 401 });
+    const resolvedParams = await params;
+    const { conversationId } = resolvedParams;
+    console.log(conversationId);
+
+    const currentUser = await getCuruentUser();
+
+    if (!currentUser?.id || !conversationId) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
+
     const conversation = await prisma.conversations.findUnique({
-      where: {
-        id: conversationId,
-      },
+      where: { id: conversationId },
       include: {
-        messages: {
-          include: {
-            seen: true,
-          },
-        },
+        messages: { include: { seen: true }, orderBy: { createdAt: "asc" } },
         users: true,
       },
     });
+
     if (!conversation) {
-      return new NextResponse("Invalid ID", { status: 400 });
+      return new NextResponse("Invalid Conversation ID", { status: 400 });
     }
+
     const lastMessage = conversation.messages[conversation.messages.length - 1];
-    if (!lastMessage) {
-      return NextResponse.json(conversation);
-    }
-    const updatMessage = await prisma.message.update({
-      where: {
-        id: lastMessage.id,
-      },
-      include: {
-        seen: true,
-        sender: true,
-      },
+
+    if (!lastMessage) return NextResponse.json(conversation);
+
+    const updatedMessage = await prisma.message.update({
+      where: { id: lastMessage.id },
+      include: { seen: true, sender: true },
       data: {
-        seen: {
-          connect: {
-            id: curentuser.id,
-          },
-        },
+        seen: { connect: { id: currentUser.id } },
       },
     });
-    return NextResponse.json(updatMessage);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (erorr) {
-    return new NextResponse("Intener Servar Erorr", { status: 500 });
+
+    return NextResponse.json(updatedMessage);
+  } catch (error) {
+    console.error("Error marking message as seen:", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
