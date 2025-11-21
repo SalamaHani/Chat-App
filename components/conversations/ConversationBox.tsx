@@ -6,7 +6,8 @@ import { authClient } from "@/lib/auth-client";
 import { FullConversationstype } from "@/app/types";
 import useOthouUser from "@/app/hook/useOthouUser";
 import { MessageTime } from "../chat/Users";
-import Avatar from "./Avatar";
+import AvatarChat from "./AvatarChat";
+import AvatarGroup from "./AvatarGroup";
 interface ConversationBoxProps {
   data: FullConversationstype;
   isActive?: boolean;
@@ -70,7 +71,11 @@ export default function ConversationBox({
       } dark:hover:bg-neutral-800  hover:bg-neutral-100 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
     >
       <div className="flex items-center gap-2">
-        <Avatar user={data} />
+        {data.isGroup ? (
+          <AvatarGroup users={data.users} />
+        ) : (
+          <AvatarChat user={othuruser} />
+        )}
         <div>
           <div className="text-sm font-semibold">
             {data?.name || othuruser?.name}

@@ -5,7 +5,7 @@ import { formatTimeArabic } from "@/utils/format";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Avatar from "../conversations/Avatar";
+import Avatar from "../conversations/AvatarChat";
 
 interface PropsUser {
   user: User | null;

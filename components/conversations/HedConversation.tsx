@@ -3,7 +3,7 @@
 import useOthouUser from "@/app/hook/useOthouUser";
 import { Conversations, User } from "@prisma/client";
 import { useMemo } from "react";
-import Avatar from "./Avatar";
+import AvatarChat from "./AvatarChat";
 import { AnimateIcon } from "../animate-ui/icons/icon";
 import { PhoneCall } from "../animate-ui/icons/phone-call";
 import { Search } from "../animate-ui/icons/search";
@@ -27,7 +27,7 @@ const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
     <header className="flex rounded-t-xl rounded-tl-none    bg-white dark:bg-neutral-900 h-18  shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
       <div className="flex items-center justify-between w-full gap-2 px-4">
         <div className="flex items-center  gap-2 px-4">
-          <Avatar user={othuruser} />
+          <AvatarChat user={othuruser} />
           <div>
             <div className="text-sm font-semibold">
               {conversation.name || othuruser.name}

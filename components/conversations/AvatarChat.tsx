@@ -7,7 +7,7 @@ import { SocketIndectors } from "../socketIndectors";
 interface AvaterProps {
   user?: User | null;
 }
-const Avatar: React.FC<AvaterProps> = ({ user }) => {
+const AvatarChat: React.FC<AvaterProps> = ({ user }) => {
   return (
     <div className=" relative">
       <div className=" relative rounded-full  inline-block h-9 w-9 ">
@@ -26,4 +26,4 @@ const Avatar: React.FC<AvaterProps> = ({ user }) => {
   );
 };
 
-export default Avatar;
+export default AvatarChat;

@@ -9,7 +9,7 @@ export async function POST(requset: Request) {
     if (!cureuntUser?.id || !cureuntUser?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    if (isGroup && (members.length > 2 || name)) {
+    if (!(isGroup && (members.length > 2 || name))) {
       return new NextResponse("invalid data", { status: 400 });
     }
     if (isGroup) {

@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import { FullConversationstype } from "@/app/types";
-import HadChatFrind from "../chat/HadChatFrind";
-import SearshChat from "../chat/SearshChat";
+
 import ConversationBox from "./ConversationBox";
 
 import EmptyConversationList from "./EmptyConversationList";

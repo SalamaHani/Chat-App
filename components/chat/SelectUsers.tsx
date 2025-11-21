@@ -1,56 +1,26 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
 import { User } from "@prisma/client";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import Avatar from "../conversations/Avatar";
-import { Checkbox } from "../animate-ui/components/radix/checkbox";
+import { X } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 interface UserListProps {
-  user: User;
-  selectedUserIds?: string[];
-  closeDialog?: () => void;
-  onSelect?: (userId: string, checked: boolean) => void;
+  User: User;
 }
 
-function SelectUsers({ user, closeDialog, onSelect }: UserListProps) {
-  const routur = useRouter();
-  const [isLoding, setIsloding] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const handleChange = (value: boolean) => {
-    setChecked(value);
-    onSelect?.(user.id, value);
-  };
-  //   const handelCilek = useCallback(() => {
-  //     setIsloding(true);
-  //     axios
-  //       .post("/api/conversations", {
-  //         userId: user?.id,
-  //       })
-  //       .then((data) => {
-  //         routur.push(`/conversations/${data.data.id}`);
-  //         closeDialog();
-  //         setIsActive(user?.id == data.data.id);
-  //       })
-  //       .finally(() => setIsloding(false));
-  //   }, [user, routur, closeDialog]);
+function SelectUsers({ User }: UserListProps) {
   return (
-    <div>
-      <div className="flex flex-col gap-3">
-        <div
-          key={user.id}
-          className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
-        >
-          <div className="flex items-center gap-3">
-            <Avatar user={user} />
-            <span className="font-medium">{user.name}</span>
-          </div>
-          <Checkbox checked={checked} onCheckedChange={handleChange} />
-        </div>
-      </div>
-    </div>
+    <Badge
+      className="dark:bg-neutral-700 my-3 bg-neutral-200 flex justify-between items-center"
+      variant="outline"
+    >
+      {User.name}
+      <button
+        className=" flex justify-center items-center cursor-pointer w-3 h-3"
+      >
+        <X />
+      </button>
+    </Badge>
   );
 }
 

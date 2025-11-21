@@ -10,7 +10,7 @@ import { AnimateIcon } from "../animate-ui/icons/icon";
 import React, { useCallback, useMemo, useState } from "react";
 import { Conversations, User } from "@prisma/client";
 import { Ellipsis } from "../animate-ui/icons/ellipsis";
-import Avatar from "./Avatar";
+import AvatarChat from "./AvatarChat";
 import useOthouUser from "@/app/hook/useOthouUser";
 import { MessageTime } from "../chat/Users";
 import { formatLastMessageDate } from "@/utils/format";
@@ -68,7 +68,7 @@ const Ditales: React.FC<DitalesProps> = ({ conversation }) => {
           <DialogTitle>Ovareviw</DialogTitle>
         </DialogHeader>
         <div className="w-full gap-2 px-4  flex justify-between italic items-center flex-col ">
-          <Avatar user={othuruser} />
+          <AvatarChat user={othuruser} />
           <div>{titel}</div>
           <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
             {textstust}
