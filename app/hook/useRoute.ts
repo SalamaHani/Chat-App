@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import useConverstion from "./useConverstions";
 import { useMemo } from "react";
 import {
-  CircleFadingPlus,
+  BadgeCheck,
   MessageCircleMore,
   PhoneCall,
   Settings2,
@@ -27,16 +27,16 @@ const useRoutes = () => {
         isActive: pathname === "/calls",
       },
       {
-        title: "My condition",
-        url: "/condition",
-        icon: CircleFadingPlus,
-        isActive: pathname === "condition",
+        title: "Account",
+        url: "/account",
+        icon: BadgeCheck,
+        isActive: pathname === "/account",
       },
       {
         title: "Settings",
         url: "/settings",
         icon: Settings2,
-        isActive: pathname === "settings",
+        isActive: pathname === "/settings",
       },
     ],
     [pathname, conversationId]

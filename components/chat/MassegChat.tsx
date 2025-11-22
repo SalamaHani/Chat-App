@@ -7,6 +7,7 @@ import { MessageTime } from "./Users";
 import Image from "next/image";
 import { Check, CheckCheck } from "lucide-react";
 import { useMemo } from "react";
+import AvatarChat from "../conversations/AvatarChat";
 
 interface ChatMessageprops {
   data: FullMessageType;
@@ -29,6 +30,7 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
   }, [data]);
   const contener = clsx("flex gap-3 p-4", isOnw && "justify-end");
   const body = clsx("flex flex-col gap-2", isOnw && "item-end");
+  const avatar = clsx(isOnw && "order-2");
   const message = clsx(
     "text-sm  max-w-md  overflow-hidden relative max-w-[75%] px-3 py-2 rounded-xl  shadow-[0_2px_4px_rgba(0,0,0,0.18)] ",
     isOnw
@@ -38,6 +40,9 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
   );
   return (
     <div className={contener}>
+      <div className={avatar}>
+        <AvatarChat user={data.sender} />
+      </div>
       <div className={body}>
         <div className=" flex  flex-col gap-1">
           <div className={message}>

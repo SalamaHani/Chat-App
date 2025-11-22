@@ -17,7 +17,7 @@ model User {
   image         String?
   status        String?
   lastSeen      DateTime? @default(now())
-
+ bio    String?
   conversationIds String[]        @db.ObjectId
   conversations   Conversations[] @relation(fields: [conversationIds], references: [id])
 
