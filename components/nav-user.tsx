@@ -1,6 +1,12 @@
 "use client";
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard } from "lucide-react";
+import {
+  BadgeCheck,
+  Bell,
+  ChevronsUpDown,
+  CloudUpload,
+  CreditCard,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -29,11 +35,11 @@ import { Logout } from "./logout";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./animate-ui/components/radix/dialog";
-import { CldUploadButton } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
@@ -45,15 +51,15 @@ interface PropsUser {
 }
 export function NavUser({ user }: PropsUser) {
   const { isMobile } = useSidebar();
-  const [name, setName] = useState(user?.name || "");
-  const [bio, setBio] = useState(user?.bio || "");
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isCldUploadM, setIsCldUploadM] = useState(false);
   const [isLoding, setIsloding] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(user.image);
   const route = useRouter();
   const {
     handleSubmit,
     setValue,
+    register,
     watch,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     formState: { errors },
@@ -78,11 +84,34 @@ export function NavUser({ user }: PropsUser) {
       .catch(() => toast.error("Somtihing Wroing !"))
       .finally(() => setIsloding(false));
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handelUlod = (resault: any) => {
-    setValue("image", resault?.info?.secure_url, {
-      shouldValidate: true,
-    });
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsloding(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "chatimge"); // Cloudinary unsigned preset
+
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dg6x1vecd/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await res.json();
+      setValue("image", data.secure_url);
+      setImagePreview(data.secure_url);
+    } catch (err) {
+      console.error("Upload failed", err);
+    } finally {
+      setIsloding(false);
+    }
   };
   return (
     <SidebarMenu>
@@ -151,58 +180,66 @@ export function NavUser({ user }: PropsUser) {
                     </DialogTitle>
                   </DialogHeader>
 
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col gap-5 p-2">
-                      {/* Avatar Section */}
-                      <div className="flex flex-col items-center gap-2">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="flex flex-col gap-4 mt-4"
+                  >
+                    {/* Avatar */}
+                    <div className="flex items-center gap-4">
+                      <div className=" w-full flex justify-center items-center flex-col gap-2">
                         <Avatar className="w-24 h-24 border">
-                          <AvatarImage src={image || user?.image || ""} />
-                          <AvatarFallback>
-                            {user?.name?.[0] || "?"}
-                          </AvatarFallback>
+                          {imagePreview ? (
+                            <AvatarImage src={imagePreview} alt="Profile" />
+                          ) : (
+                            <AvatarFallback>
+                              {setstring(user.name)}
+                            </AvatarFallback>
+                          )}
                         </Avatar>
-                        <CldUploadButton
-                          options={{ maxFiles: 1 }}
-                          onSuccess={handelUlod}
-                          uploadPreset="chatimge"
-                        >
-                          <label className="text-sm text-blue-600 cursor-pointer hover:underline">
-                            Change Photo
-                          </label>
-                        </CldUploadButton>
+                        <label className="text-sm text-sidebar-primary cursor-pointer hover:underline">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageChange}
+                          />
+                          Change Photo
+                        </label>
                       </div>
+                    </div>
 
-                      {/* Name */}
-                      <div className="flex flex-col gap-1">
-                        <label className="text-sm font-medium">Name</label>
-                        <Input
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="Your name"
-                        />
-                      </div>
+                    {/* Name */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Name
+                      </label>
+                      <Input {...register("name")} placeholder="Your Name" />
+                    </div>
 
-                      {/* Bio */}
-                      <div className="flex flex-col gap-1">
-                        <label className="text-sm font-medium">Bio</label>
-                        <Textarea
-                          value={bio}
-                          onChange={(e) => setBio(e.target.value)}
-                          placeholder="Write something about yourself..."
-                          className="resize-none"
-                        />
-                      </div>
+                    {/* Bio */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Bio
+                      </label>
+                      <Textarea
+                        {...register("bio")}
+                        placeholder="Tell something about yourself"
+                        rows={3}
+                      />
+                    </div>
 
-                      {/* Submit button */}
+                    <DialogFooter className="flex gap-2">
                       <Button
-                        className="w-full mt-3"
-                        type="submit"
-                        disabled={isLoding}
+                        type="button"
+                        variant="outline"
                         onClick={() => setIsDialogOpen(false)}
                       >
-                        Save Changes
+                        Cancel
                       </Button>
-                    </div>
+                      <Button disabled={isLoding} type="submit">
+                        Save
+                      </Button>
+                    </DialogFooter>
                   </form>
                 </DialogContent>
               </Dialog>

@@ -22,6 +22,7 @@ import useConverstions from "@/app/hook/useConverstions";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
+import AvatarGroup from "./AvatarGroup";
 interface DitalesProps {
   conversation: Conversations & {
     users: User[];
@@ -68,34 +69,55 @@ const Ditales: React.FC<DitalesProps> = ({ conversation }) => {
           <DialogTitle>Ovareviw</DialogTitle>
         </DialogHeader>
         <div className="w-full gap-2 px-4  flex justify-between italic items-center flex-col ">
-          <AvatarChat user={othuruser} />
+          {conversation.isGroup ? (
+            <AvatarGroup users={conversation.users} />
+          ) : (
+            <AvatarChat user={othuruser} />
+          )}
           <div>{titel}</div>
           <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
             {textstust}
           </div>
         </div>
         <div>
-          <div className="w-full gap-2 px-4  flex justify-around italic  items-start ">
-            <div>
-              <p>Last Seen</p>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground">
-                  {formatLastMessageDate(conversation?.lastMessageAt)} at
-                </span>
-                <MessageTime
-                  createdAt={conversation?.lastMessageAt ?? Date.now}
-                />
+          {conversation.isGroup ? (
+            <div className="w-full gap-1 px-4 text-sm  flex justify-center italic items-center  ">
+              <div>
+                <p>Cerated Group</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">
+                    {formatLastMessageDate(conversation?.createdAt)} at
+                  </span>
+                  <MessageTime
+                    createdAt={conversation?.createdAt ?? Date.now}
+                  />
+                </div>
               </div>
             </div>
-            <div>
-              <p>Email</p>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground">
-                  {othuruser.email}
-                </span>
+          ) : (
+            <div className="w-full gap-2 px-4  flex justify-around italic  items-start ">
+              <div>
+                <p>Last Seen</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">
+                    {formatLastMessageDate(conversation?.lastMessageAt)} at
+                  </span>
+                  <MessageTime
+                    createdAt={conversation?.lastMessageAt ?? Date.now}
+                  />
+                </div>
+              </div>
+              <div>
+                <p>Email</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">
+                    {othuruser.email}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
+
           <div className="w-full gap-2 px-4 py-4  flex  italic  items-center flex-col ">
             <div className="flex items-center gap-5 pt-5 p-2 ">
               <RippleButton

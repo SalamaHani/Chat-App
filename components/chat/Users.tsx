@@ -21,10 +21,9 @@ export function MessageTime({ createdAt }: { createdAt: Date }) {
 
 function Users({ user, closeDialog }: PropsUser) {
   const routur = useRouter();
-  const [isLoding, setIsloding] = useState(false);
+  
   const [isActive, setIsActive] = useState(false);
   const handelCilek = useCallback(() => {
-    setIsloding(true);
     axios
       .post("/api/conversations", {
         userId: user?.id,
@@ -34,15 +33,14 @@ function Users({ user, closeDialog }: PropsUser) {
         closeDialog();
         setIsActive(user?.id == data.data.id);
       })
-      .finally(() => setIsloding(false));
+      
   }, [user, routur, closeDialog]);
-  if (isLoding) {
-    return <p>45</p>;
-  }
+  
   return (
     <div
       onClick={handelCilek}
       className={`${
+
         isActive ? `bg-neutral-100 dark:bg-neutral-800` : `bg-none`
       } dark:hover:bg-neutral-800  hover:bg-neutral-50 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
     >

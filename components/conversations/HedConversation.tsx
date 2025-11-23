@@ -9,6 +9,7 @@ import { PhoneCall } from "../animate-ui/icons/phone-call";
 import { Search } from "../animate-ui/icons/search";
 import { Cctv } from "../animate-ui/icons/cctv";
 import Ditales from "./Ditales";
+import AvatarGroup from "./AvatarGroup";
 
 interface HedConversationProps {
   conversation: Conversations & {
@@ -27,7 +28,11 @@ const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
     <header className="flex rounded-t-xl rounded-tl-none    bg-white dark:bg-neutral-900 h-18  shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
       <div className="flex items-center justify-between w-full gap-2 px-4">
         <div className="flex items-center  gap-2 px-4">
-          <AvatarChat user={othuruser} />
+          {conversation.isGroup ? (
+            <AvatarGroup users={conversation.users} />
+          ) : (
+            <AvatarChat user={othuruser} />
+          )}
           <div>
             <div className="text-sm font-semibold">
               {conversation.name || othuruser.name}

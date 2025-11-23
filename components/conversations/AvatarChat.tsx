@@ -5,7 +5,7 @@ import Image from "next/image";
 import { SocketIndectors } from "../socketIndectors";
 
 interface AvaterProps {
-  user?: User | null;
+  user?: User;
 }
 const AvatarChat: React.FC<AvaterProps> = ({ user }) => {
   return (

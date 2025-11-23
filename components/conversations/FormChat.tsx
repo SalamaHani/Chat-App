@@ -42,7 +42,7 @@ function FormChat() {
         onSuccess={handelUlod}
         uploadPreset="chatimge"
       >
-        <ImageIcon className="text-sidebar-primary" size={23} />
+        <ImageIcon className="text-sidebar-primary cursor-pointer" size={23} />
       </CldUploadButton>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -57,7 +57,7 @@ function FormChat() {
         />
         <button
           type="submit"
-          className=" rounded-full p-2 bg-sidebar-primary  transition"
+          className=" rounded-full p-2 bg-sidebar-primary cursor-pointer  transition"
         >
           <AnimateIcon animateOnHover>
             <SendHorizontal color="#f0f9ff" size={20} />
