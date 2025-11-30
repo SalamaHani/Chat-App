@@ -26,9 +26,9 @@ async function page({ params }: IdPrames) {
       </header>
       <div className="flex flex-1 w-full  p  pt-0">
         <div className="flex flex-1  ">
-          <div className=" w-full h-full">
+          <div className=" w-full  ">
             <HedConversation conversation={conversation} />
-            <Body  intionalMesssages={messages}/>
+            <Body intionalMesssages={messages} />
           </div>
         </div>
       </div>

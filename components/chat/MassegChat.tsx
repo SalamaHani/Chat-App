@@ -15,19 +15,19 @@ interface ChatMessageprops {
 }
 const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
   const session = authClient.useSession();
-  const isOnw = session.data?.user.email == data.sender.email;
-  // const seenlist = (data.seen || [])
-  //   .filter((user) => user.email !== data.sender.email)
-  //   .map((user) => user.name)
-  //   .join(", ");
+  const isOnw = session?.data?.user?.email === data?.sender?.email;
+  const seenlist = (data.seen || [])
+    .filter((user) => user.email !== data.sender.email)
+    .map((user) => user.name)
+    .join(", ");
   // const otherSeen = (data.seen || []).filter((u) => u.id !== data.sender.id);
 
-  // const hasSeen = (data.seen || []).some(
-  //   (user) => user.email !== data.sender.email
-  // );
-  const hasSeen = useMemo(() => {
-    return data.seen.length == 2;
-  }, [data]);
+  const hasSeen = (data.seen || []).some(
+    (user) => user.email !== data.sender.email
+  );
+  // const hasSeen = useMemo(() => {
+  //   return data.seen.length == 2;
+  // }, [data]);
   const contener = clsx("flex gap-3 p-4", isOnw && "justify-end");
   const body = clsx("flex flex-col gap-2", isOnw && "item-end");
   const avatar = clsx(isOnw && "order-2");

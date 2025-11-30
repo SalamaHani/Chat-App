@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/utils/db";
 import { getCuruentUser } from "@/utils/action";
+import { pusherServesr } from "@/lib/Pusher";
 interface IParams {
   params: Promise<{
     conversationId: string;
@@ -33,6 +34,11 @@ export async function DELETE(requset: Request, { params }: IParams) {
           hasSome: [currentUser?.id],
         },
       },
+    });
+    conversation.users.forEach((user) => {
+      if (user.email) {
+        pusherServesr.trigger(user.email, "conversation:remove", conversation);
+      }
     });
     return NextResponse.json(deleletconvarsetion);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

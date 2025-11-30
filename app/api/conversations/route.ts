@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCuruentUser } from "@/utils/action";
 import prisma from "@/utils/db";
+import { pusherServesr } from "@/lib/Pusher";
 export async function POST(requset: Request) {
   try {
     const cureuntUser = await getCuruentUser();
@@ -31,6 +32,15 @@ export async function POST(requset: Request) {
         include: {
           users: true,
         },
+      });
+      newConversations.users.forEach((user) => {
+        if (user.email) {
+          pusherServesr.trigger(
+            user.email,
+            "conversation:new",
+            newConversations
+          );
+        }
       });
       return NextResponse.json(newConversations);
     }
@@ -70,6 +80,11 @@ export async function POST(requset: Request) {
       include: {
         users: true,
       },
+    });
+    newConversations.users.map((user) => {
+      if (user.email) {
+        pusherServesr.trigger(user.email, "conversation:new", newConversations);
+      }
     });
     return NextResponse.json(newConversations);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

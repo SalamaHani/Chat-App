@@ -33,23 +33,20 @@ export default function ConversationBox({
   }, [session?.data?.user?.email]);
 
   const hasSeen = useMemo(() => {
-    if (!lastMessage) {
-      return false;
-    }
-    if (!userEmail) {
-      return false;
-    }
-    const seenArray = lastMessage?.seen || [];
+    if (!lastMessage) return false;
+    if (!userEmail) return false;
+
+    const seenArray = lastMessage.seen || [];
 
     return (
       seenArray.filter((user) => {
-        user?.email == userEmail;
-      }).length != 0
+        return user?.email === userEmail;
+      }).length !== 0
     );
   }, [userEmail, lastMessage]);
+
   const countlasmasseags = useMemo(() => {
     const countMessages = lastMessage?.seen?.length;
-    console.log(lastMessage, "gfbgfferg");
     return countMessages;
   }, [lastMessage]);
 
@@ -83,8 +80,8 @@ export default function ConversationBox({
           <div
             className={` text-sm  truncate  ${
               hasSeen
-                ? `text-gray-500 dark:text-white`
-                : `text-gray-500 font-medium`
+                ? `text-neutral-500 font-medium`
+                : `text-neutral-700  font-bold`
             }`}
           >
             {lasetMsessageText.length > 30

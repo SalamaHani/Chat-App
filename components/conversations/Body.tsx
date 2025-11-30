@@ -7,6 +7,8 @@ import MassegChat from "../chat/MassegChat";
 import axios from "axios";
 import { ScrollArea } from "../ui/scroll-area";
 import { useTheme } from "next-themes";
+import { pusherClient } from "@/lib/Pusher";
+import { find } from "lodash";
 // import imgese from "../../public/images/download.jpg";
 interface MessagesProps {
   intionalMesssages: FullMessageType[];
@@ -23,9 +25,39 @@ const Body: React.FC<MessagesProps> = ({ intionalMesssages }) => {
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
+  useEffect(() => {
+    const MessagesHndelr = (message: FullMessageType) => {
+      axios.post(`/api/conversations/${conversationId}/seen`);
+      setMessages((current) => {
+        if (find(current, { id: message.id })) {
+          return current;
+        }
+        return [...current, message];
+      });
+    };
+    const MessagesUpdatHndelr = (newMessage: FullMessageType) => {
+      setMessages((current) =>
+        current.map((cuerntMessag) => {
+          if (cuerntMessag.id == newMessage.id) {
+            return newMessage;
+          }
+          return cuerntMessag;
+        })
+      );
+    };
+    pusherClient.subscribe(conversationId);
+    bottonRef?.current?.scrollIntoView();
+    pusherClient.bind("messages:new", MessagesHndelr);
+    pusherClient.bind("message:update", MessagesUpdatHndelr);
+    return () => {
+      pusherClient.unsubscribe(conversationId);
+      pusherClient.unbind("messages:new", MessagesHndelr);
+      pusherClient.unbind("message:update", MessagesUpdatHndelr);
+    };
+  }, [conversationId]);
   return (
     <div className=" flex  rounded-xl w-full ">
-      <div className="w-full h-full overflow-hidden  ">
+      <div className="w-full  overflow-hidden  ">
         <ScrollArea
           style={{
             backgroundImage,
