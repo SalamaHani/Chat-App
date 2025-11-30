@@ -3,6 +3,7 @@ import "./globals.css";
 import Providers from "./Providers";
 
 import { ReactNode } from "react";
+import ActiveStutas from "@/components/conversations/ActiveStutas";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <ActiveStutas />
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -19,6 +19,7 @@ import ConversationsList from "@/components/conversations/ConversationsList";
 import { getAllUsers, getConversations } from "@/utils/action";
 import HadChatFrind from "@/components/chat/HadChatFrind";
 import SearshChat from "@/components/chat/SearshChat";
+import ActiveStutas from "@/components/conversations/ActiveStutas";
 export default async function ChatLayout({
   children,
 }: {
@@ -47,7 +48,10 @@ export default async function ChatLayout({
           </div>
         </div>
       </SidebarInset>
-      <Providers>{children}</Providers>
+      <Providers>
+        <ActiveStutas />
+        {children}
+      </Providers>
     </SidebarProvider>
   );
 }

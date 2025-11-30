@@ -1,10 +1,16 @@
 "use client";
-import { useSocket } from "@/app/socket-provider";
-import React, { useEffect } from "react";
+import { useActive } from "@/app/hook/useActive";
+import { User } from "@prisma/client";
+interface AvaterProps {
+  user?: User;
+}
+export const SocketIndectors: React.FC<AvaterProps> = ({ user }) => {
+  const { mempers } = useActive();
+  const userEmail = user?.email;
+  const isActive = userEmail ? mempers.includes(userEmail) : false;
+  console.log(`stutas ${isActive}`);
 
-export const SocketIndectors = () => {
-  const { isConnected } = useSocket();
-  if (isConnected) {
+  if (isActive) {
     return (
       <span className=" absolute block rounded-full bg-yellow-500 ring-2  ring-white right-0 top-0 h-2 w-2 " />
     );

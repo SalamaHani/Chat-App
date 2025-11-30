@@ -21,7 +21,7 @@ const AvatarChat: React.FC<AvaterProps> = ({ user }) => {
           fill
         />
       </div>
-      <SocketIndectors />
+      <SocketIndectors user={user} />
     </div>
   );
 };
