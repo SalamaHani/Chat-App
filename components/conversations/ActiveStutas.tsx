@@ -1,9 +1,8 @@
 "use client";
 
-import { useActiveUsers } from "@/app/hook/useActiveUsers";
-
+import { useActivelist } from "@/app/hook/useActivelist";
 function ActiveStutas() {
-  useActiveUsers();
+  useActivelist();
   return null;
 }
 

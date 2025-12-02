@@ -1,14 +1,13 @@
 import { useEffect } from "react";
 import { pusherClient } from "@/lib/Pusher";
 import { useActive } from "./useActive";
-import { Channel } from "pusher-js";
 
-export const useActiveUsers = () => {
-  const { add, set, remove } = useActive();
+export const useActivelist = () => {
+  const { add, set, remove, mempers } = useActive(); // mempers = current active users
 
   useEffect(() => {
-    // Subscribe to the channel (no need to store it in state)
-    const channel: Channel = pusherClient.subscribe("presence-members");
+    // Subscribe once, no need for state
+    const channel = pusherClient.subscribe("presence-members");
 
     // Initial members
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,7 +17,7 @@ export const useActiveUsers = () => {
       members.each((member: Record<string, any>) => {
         initialMembers.push(member.id);
       });
-      set(initialMembers); // update active users state from useActive hook
+      set(initialMembers); // update active users
     });
 
     // Member joined
@@ -33,11 +32,12 @@ export const useActiveUsers = () => {
       remove(member.id);
     });
 
+    // Cleanup
     return () => {
       pusherClient.unsubscribe("presence-members");
     };
   }, [set, add, remove]);
 
-  // return nothing or return active user IDs from your useActive hook
-  return null;
+  // Return the current list of active users
+  return mempers;
 };
