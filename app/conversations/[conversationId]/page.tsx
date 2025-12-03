@@ -12,8 +12,8 @@ async function page({ params }: IdPrames) {
   const resolvedParams = await params;
   const { conversationId } = resolvedParams;
   const conversation = await getCaonversationById(conversationId);
-  console.log(conversation);
   const messages = await getMessages(conversationId);
+
 
   if (!conversation) {
     return <EmptyConversation />;

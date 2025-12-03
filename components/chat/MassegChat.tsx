@@ -6,8 +6,8 @@ import clsx from "clsx";
 import { MessageTime } from "./Users";
 import Image from "next/image";
 import { Check, CheckCheck } from "lucide-react";
-import { useMemo } from "react";
 import AvatarChat from "../conversations/AvatarChat";
+import { useMemo } from "react";
 
 interface ChatMessageprops {
   data: FullMessageType;
@@ -15,19 +15,16 @@ interface ChatMessageprops {
 }
 const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
   const session = authClient.useSession();
-  const isOnw = session?.data?.user?.email === data?.sender?.email;
-  const seenlist = (data.seen || [])
-    .filter((user) => user.email !== data.sender.email)
-    .map((user) => user.name)
-    .join(", ");
+  // const [isOnw , setIsOnw] = useState(true)
+  const isOnw = session?.data?.user?.email == data?.sender?.email;
+  // console.log(`isookifjv ${isOnw}`);
+
   // const otherSeen = (data.seen || []).filter((u) => u.id !== data.sender.id);
 
-  const hasSeen = (data.seen || []).some(
-    (user) => user.email !== data.sender.email
-  );
-  // const hasSeen = useMemo(() => {
-  //   return data.seen.length == 2;
-  // }, [data]);
+  const hasSeen = useMemo(() => {
+    return (data.seen || []).some((user) => user.email !== data.sender.email);
+  }, [data.seen, data.sender.email]);
+
   const contener = clsx("flex gap-3 p-4", isOnw && "justify-end");
   const body = clsx("flex flex-col gap-2", isOnw && "item-end");
   const avatar = clsx(isOnw && "order-2");

@@ -9,6 +9,8 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useTheme } from "next-themes";
 import { pusherClient } from "@/lib/Pusher";
 import { find } from "lodash";
+import { User } from "@prisma/client";
+
 // import imgese from "../../public/images/download.jpg";
 interface MessagesProps {
   intionalMesssages: FullMessageType[];
@@ -35,6 +37,7 @@ const Body: React.FC<MessagesProps> = ({ intionalMesssages }) => {
         return [...current, message];
       });
     };
+
     const MessagesUpdatHndelr = (newMessage: FullMessageType) => {
       setMessages((current) =>
         current.map((cuerntMessag) => {
@@ -45,6 +48,8 @@ const Body: React.FC<MessagesProps> = ({ intionalMesssages }) => {
         })
       );
     };
+
+
     pusherClient.subscribe(conversationId);
     bottonRef?.current?.scrollIntoView();
     pusherClient.bind("messages:new", MessagesHndelr);
@@ -56,7 +61,7 @@ const Body: React.FC<MessagesProps> = ({ intionalMesssages }) => {
     };
   }, [conversationId]);
   return (
-    <div className=" flex  rounded-xl w-full ">
+    <div className=" flex  rounded-xl w-full h-full  ">
       <div className="w-full  overflow-hidden  ">
         <ScrollArea
           style={{

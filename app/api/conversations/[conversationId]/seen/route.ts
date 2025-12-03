@@ -44,7 +44,6 @@ export async function POST(request: Request, { params }: IParams) {
         seen: { connect: { id: currentUser.id } },
       },
     });
-
     await pusherServesr.trigger(currentUser.email, "conversation:update", {
       id: conversationId,
       messages: [updatedMessage],

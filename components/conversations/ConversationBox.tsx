@@ -45,10 +45,14 @@ export default function ConversationBox({
     );
   }, [userEmail, lastMessage]);
 
-  const countlasmasseags = useMemo(() => {
-    const countMessages = lastMessage?.seen?.length;
-    return countMessages;
-  }, [lastMessage]);
+  const unseenCount = useMemo(() => {
+    if (!data.messages || !userEmail) return 0;
+    return data.messages.reduce((count, message) => {
+      const seenArray = message.seen || [];
+      const hasSeen = seenArray.some((user) => user.email === userEmail);
+      return hasSeen ? count : count + 1;
+    }, 0);
+  }, [data.messages, userEmail]);
 
   const lasetMsessageText = useMemo(() => {
     if (lastMessage?.image) {
@@ -92,9 +96,9 @@ export default function ConversationBox({
       </div>
       <div className="flex flex-col items-end justify-around size-13  ">
         <MessageTime createdAt={lastMessage?.createdAt ?? Date.now} />
-        {countlasmasseags != undefined ? (
+        {unseenCount != 0 ? (
           <Badge className="h-4 min-w-4 rounded-full bg-sidebar-primary px-1 font-mono tabular-nums">
-            {countlasmasseags}
+            {unseenCount}
           </Badge>
         ) : null}
       </div>

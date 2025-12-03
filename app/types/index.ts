@@ -9,6 +9,7 @@ export type FullMessageType = Message & {
 export type FullConversationstype = Conversations & {
   users: User[];
   messages: FullMessageType[];
+  unseenCount?: number;
 };
 export type NextApiResponseServerIo = NextApiResponse & {
   socket: Socket & {

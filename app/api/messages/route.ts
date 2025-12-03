@@ -2,7 +2,7 @@ import { getCuruentUser } from "@/utils/action";
 import { NextResponse } from "next/server";
 import prisma from "@/utils/db";
 import { pusherServesr } from "@/lib/Pusher";
-import { id } from "zod/v4/locales";
+
 export async function POST(requset: Request) {
   try {
     const currentuser = await getCuruentUser();
@@ -58,7 +58,8 @@ export async function POST(requset: Request) {
       },
     });
     await pusherServesr.trigger(conversationId, "messages:new", newMessage);
-    const LastMessage = UpdatedConvarstion.messages[UpdatedConvarstion.messages.length - 1];
+    const LastMessage =
+      UpdatedConvarstion.messages[UpdatedConvarstion.messages.length - 1];
     UpdatedConvarstion.users.map((user) => {
       pusherServesr.trigger(user.email!, "conversation:update", {
         id: conversationId,

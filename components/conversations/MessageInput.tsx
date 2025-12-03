@@ -1,7 +1,6 @@
 import React from "react";
 import {
   FieldErrors,
-  FieldValue,
   FieldValues,
   UseFormRegister,
 } from "react-hook-form";
@@ -19,7 +18,6 @@ const MessageInput: React.FC<MessageINputProps> = ({
   type,
   required,
   register,
-  error,
 }) => {
   return (
     <div className="relative w-full ">

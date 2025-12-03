@@ -20,17 +20,76 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+# 🚀 Chat App
 
-To learn more about Next.js, take a look at the following resources:
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![Next.js](https://img.shields.io/badge/Next.js-15.5.6-black?logo=next.js)
+![Prisma](https://img.shields.io/badge/Prisma-6.19.0-blue)
+![MongoDB](https://img.shields.io/badge/MongoDB-6.0-green?logo=mongodb)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.3-blue?logo=tailwind-css)
+![Pusher](https://img.shields.io/badge/Pusher-RealTime-purple)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-Cloud-Orange)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A **full-featured real-time chat application** built with **Next.js**, **React**, **Prisma**, **MongoDB**, and **BetterAuth**, featuring:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Real-time messaging via **Pusher**
+- Authentication with **BetterAuth**
+- Cloud image and video storage using **Cloudinary**
+- Beautiful responsive UI with **Tailwind CSS** and **shadcn/ui**
+- Fully type-safe with **TypeScript**
+- Group chats, seen/unseen message status, avatars, and notifications
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🖼 Screenshots / GIFs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![Chat App Screenshot](./screenshots/chat-ui.png)
+_Placeholder for your screenshot or GIF showcasing the chat interface._
+
+---
+
+## ⚡ Features
+
+### Real-time Messaging
+
+- Send and receive messages instantly
+- Messages marked as **seen/unseen**
+- Supports **images** and **videos**
+
+### Authentication
+
+- Email & password login via **BetterAuth**
+- Session management with JWT
+- Secure API routes
+
+### UI / UX
+
+- Clean responsive design with **Tailwind CSS**
+- Components from **shadcn/ui**
+- Avatars, groups, badges, and timestamps
+- Scrollable chat area with smooth interactions
+
+### Cloud Media
+
+- Upload images and videos to **Cloudinary**
+- Display media in chat dynamically
+
+### Tech Stack
+
+- **Frontend:** React 18, Next.js 15.5.6, Tailwind CSS, shadcn/ui
+- **Backend:** Next.js API routes, Prisma ORM, MongoDB
+- **Auth:** BetterAuth (email/password)
+- **Realtime:** Pusher
+- **Media Storage:** Cloudinary
+- **Language:** TypeScript
+
+---
+
+## 🏗 Installation
+
+1. **Clone the repo**
+
+```bash
+git clone https://github.com/your-username/chat-app.git
+cd chat-app
+```
