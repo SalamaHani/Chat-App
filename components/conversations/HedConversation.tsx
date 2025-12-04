@@ -17,40 +17,40 @@ interface HedConversationProps {
   };
 }
 const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
-  const othuruser = useOthouUser(conversation);
-  const textstust = useMemo(() => {
+  const otherUser = useOthouUser(conversation);
+  const statusText = useMemo(() => {
     if (conversation.isGroup) {
-      return `${conversation.users.length} mempers`;
+      return `${conversation.users.length} members`;
     }
     return "Active";
   }, [conversation]);
   return (
-    <header className="flex rounded-t-xl rounded-tl-none    bg-white dark:bg-neutral-900 h-18  shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
-      <div className="flex items-center justify-between w-full gap-2 px-4">
-        <div className="flex items-center  gap-2 px-4">
+    <header className="flex h-20 shrink-0 items-center rounded-t-[28px] bg-[#202c33] text-[#e9edef] shadow-[0_1px_0_rgba(255,255,255,0.05)] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
+      <div className="flex w-full items-center justify-between gap-4 px-6">
+        <div className="flex items-center gap-3">
           {conversation.isGroup ? (
             <AvatarGroup users={conversation.users} />
           ) : (
-            <AvatarChat user={othuruser} />
+            <AvatarChat user={otherUser} />
           )}
           <div>
-            <div className="text-sm font-semibold">
-              {conversation.name || othuruser.name}
+            <div className="text-sm font-semibold leading-tight">
+              {conversation.name || otherUser.name}
             </div>
-            <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
-              {textstust}
+            <div className="text-xs font-medium text-[#8696a0]">
+              {statusText}
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4 px-4">
+        <div className="flex items-center gap-4">
           <AnimateIcon animateOnHover>
-            <PhoneCall className="cursor-pointer" size={20} />
+            <PhoneCall className="cursor-pointer text-[#8696a0]" size={20} />
           </AnimateIcon>
           <AnimateIcon animateOnHover>
-            <Cctv className="cursor-pointer" size={20} />
+            <Cctv className="cursor-pointer text-[#8696a0]" size={20} />
           </AnimateIcon>
           <AnimateIcon animateOnHover>
-            <Search className="cursor-pointer" size={20} />
+            <Search className="cursor-pointer text-[#8696a0]" size={20} />
           </AnimateIcon>
           <Ditales conversation={conversation} />
         </div>

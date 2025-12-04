@@ -33,25 +33,31 @@ export default async function ChatLayout({
   const users = await getAllUsers();
   return (
     <SidebarProvider>
+      <ActiveStutas />
       <AppSidebar session={session} />
-      <SidebarInset>
-        <header className="flex  h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
+      <SidebarInset className="bg-[#0b141a] text-[#d1d7db]">
+        <header className="flex h-20 items-center border-b border-white/10 bg-gradient-to-r from-[#00a884] to-[#075e54] text-white shadow-lg transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
+          <div className="flex w-full items-center justify-between px-4">
+            <div>
+              <p className="text-lg font-semibold tracking-wide">WhatsApp</p>
+              <p className="text-xs text-white/80">End-to-end encrypted chats</p>
+            </div>
+            <SidebarTrigger className="rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20" />
           </div>
         </header>
-        <div className="flex w-full  flex-1  pl-4 pt-0">
-          <div className="rounded-xl  bg-neutral-200 dark:bg-neutral-900 rounded-tr-none rounded-br-none overflow-hidden h-full  w-full">
+        <div className="flex w-full flex-1 gap-4 px-4 pb-4 pt-4">
+          <div className="flex w-full max-w-md flex-col gap-3 rounded-[28px] border border-white/5 bg-[#111b21] shadow-2xl shadow-black/40">
             <HadChatFrind users={users} />
             <SearshChat />
             <ConversationsList intialItems={Conversations} />
           </div>
+          <Providers>
+            <div className="flex h-full w-full flex-1">
+              {children}
+            </div>
+          </Providers>
         </div>
       </SidebarInset>
-      <Providers>
-        <ActiveStutas />
-        {children}
-      </Providers>
     </SidebarProvider>
   );
 }

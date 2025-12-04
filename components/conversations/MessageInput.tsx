@@ -20,14 +20,14 @@ const MessageInput: React.FC<MessageINputProps> = ({
   register,
 }) => {
   return (
-    <div className="relative w-full ">
+    <div className="relative w-full">
       <input
         id={id}
         type={type}
-        autoComplete={id}
+        autoComplete="off"
         {...register(id, { required })}
         placeholder={placeholder}
-        className="  font-light py-2 px-4  w-full rounded-full focus:online-none"
+        className="w-full rounded-3xl border border-white/5 bg-[#0b141a] py-3 px-5 text-sm text-[#e9edef] placeholder:text-[#6c7880] shadow-inner shadow-black/20 transition focus:outline-none focus:ring-2 focus:ring-[#00a884]"
       />
     </div>
   );

@@ -127,7 +127,7 @@ export function NavUser({ user }: PropsUser) {
                   src={image || user?.image || ""}
                   alt={user?.name}
                 />
-                <AvatarFallback className="rounded-lg">
+                <AvatarFallback className="rounded-lg bg-primary text-white ">
                   {setstring(user?.name || "")}
                 </AvatarFallback>
               </Avatar>

@@ -3,13 +3,16 @@ import { ScrollArea } from "../ui/scroll-area";
 
 function EmptyConversationList() {
   return (
-    <div className="min-h-120 max-h-120 bg-white dark:bg-neutral-900  overflow-hidden">
-      <ScrollArea>
-        <div className="space-y-2 relative pl-2 pr-4 min-h-120 max-h-120  dark:bg-neutral-900 ">
-          <div className="flex justify-center items-center h-full ">
-            <h1 className="text-secondary-foreground text-2xl italic font-medium">
-              Start new Conversations{" "}
-            </h1>
+    <div className="min-h-[calc(100vh-160px)] max-h-[calc(100vh-160px)] overflow-hidden rounded-b-[28px] bg-[#111b21]">
+      <ScrollArea className="h-full">
+        <div className="flex h-full items-center justify-center px-6 text-center text-[#8696a0]">
+          <div>
+            <p className="text-lg font-semibold text-[#e9edef]">
+              Your chats will appear here
+            </p>
+            <p className="text-sm">
+              Tap the new chat button to start a WhatsApp-style conversation.
+            </p>
           </div>
         </div>
       </ScrollArea>

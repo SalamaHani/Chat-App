@@ -67,25 +67,23 @@ export default function ConversationBox({
   return (
     <div
       onClick={handelCilek}
-      className={`${
-        isActive ? ` bg-neutral-200 dark:bg-neutral-800` : `bg-none`
-      } dark:hover:bg-neutral-800  hover:bg-neutral-100 flex items-center justify-between cursor-pointer  gap-5 rounded-sm  p-2`}
+      className={`flex cursor-pointer items-center justify-between gap-5 rounded-2xl p-3 transition-all ${
+        isActive ? "bg-[#2a3942]" : "hover:bg-[#202c33]"
+      }`}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {data.isGroup ? (
           <AvatarGroup users={data.users} />
         ) : (
           <AvatarChat user={othuruser} />
         )}
-        <div>
-          <div className="text-sm font-semibold">
+        <div className="space-y-0.5">
+          <div className="text-sm font-semibold text-[#e9edef]">
             {data?.name || othuruser?.name}
           </div>
           <div
-            className={` text-sm  truncate  ${
-              hasSeen
-                ? `text-neutral-500 font-medium`
-                : `text-neutral-700  font-bold`
+            className={`truncate text-xs ${
+              hasSeen ? "text-[#8696a0]" : "font-semibold text-[#d1d7db]"
             }`}
           >
             {lasetMsessageText.length > 30
@@ -94,10 +92,10 @@ export default function ConversationBox({
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-end justify-around size-13  ">
+      <div className="flex h-13 flex-col items-end justify-around text-xs text-[#8696a0]">
         <MessageTime createdAt={lastMessage?.createdAt ?? Date.now} />
         {unseenCount != 0 ? (
-          <Badge className="h-4 min-w-4 rounded-full bg-sidebar-primary px-1 font-mono tabular-nums">
+          <Badge className="h-4 min-w-4 rounded-full bg-[#25d366] px-1 font-mono text-xs tabular-nums text-[#111b21]">
             {unseenCount}
           </Badge>
         ) : null}

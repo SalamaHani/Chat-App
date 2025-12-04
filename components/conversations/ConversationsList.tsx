@@ -76,9 +76,9 @@ const ConversationsList: React.FC<Conversationsporps> = ({ intialItems }) => {
   }
 
   return (
-    <div className="min-h-120 max-h-120 bg-white dark:bg-neutral-900  overflow-hidden">
-      <ScrollArea>
-        <div className="space-y-2 relative pl-2 pr-4 min-h-120 max-h-120  dark:bg-neutral-900 ">
+    <div className="min-h-[calc(100vh-160px)] max-h-[calc(100vh-160px)] overflow-hidden rounded-b-[28px] bg-[#111b21]">
+      <ScrollArea className="h-full">
+        <div className="relative flex flex-col gap-1 px-4 py-3">
           {Items.map((item) => {
             console.log(item);
             return (

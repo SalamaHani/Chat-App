@@ -14,23 +14,15 @@ async function page({ params }: IdPrames) {
   const conversation = await getCaonversationById(conversationId);
   const messages = await getMessages(conversationId);
 
-
   if (!conversation) {
     return <EmptyConversation />;
   }
 
   return (
-    <div className=" relative  pr-4  w-full  rounded-xl ">
-      <header className="flex  h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-        <div className="flex items-center gap-2 px-4"></div>
-      </header>
-      <div className="flex flex-1 w-full  p  pt-0">
-        <div className="flex flex-1  ">
-          <div className=" w-full  ">
-            <HedConversation conversation={conversation} />
-            <Body intionalMesssages={messages} />
-          </div>
-        </div>
+    <div className="flex h-full w-full rounded-[32px] border border-white/5 bg-[#0b141a] shadow-2xl shadow-black/40">
+      <div className="flex w-full flex-col rounded-[32px]">
+        <HedConversation conversation={conversation} />
+        <Body intionalMesssages={messages} />
       </div>
     </div>
   );

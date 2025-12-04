@@ -1,29 +1,26 @@
 "use client";
+
 import { Search } from "lucide-react";
 import React, { useState } from "react";
 import { Input } from "../ui/input";
 
 function SearshChat() {
   const [isOpen, setIsopen] = useState(false);
+
   return (
-    <div className="  flex-1 flex px-4   bg-white dark:bg-neutral-900    h-18 shrink-0  gap-2  ">
-      <Input
-        type="text"
-        placeholder="Search or Start new chat"
-        //   onChange={(e) => {
-        //     setParmes(e.target.value);
-        //     handleSearch(e.target.value);
-        //   }}
-        onFocus={() => {
-          setIsopen(true);
-        }}
-        onBlur={() => {
-          setIsopen(false);
-        }}
-        className={`   flex-1 px-3   border-none    rounded-sm  ${
-          isOpen ? "" : ""
-        }  text-base dark:placeholder:text-white placeholder:text-gray-500 `}
-      />
+    <div className="flex h-16 items-center border-b border-white/5 px-6">
+      <div className="relative flex w-full items-center">
+        <Search className="pointer-events-none absolute left-4 h-5 w-5 text-[#8696a0]" />
+        <Input
+          type="text"
+          placeholder="Search or start a new chat"
+          onFocus={() => setIsopen(true)}
+          onBlur={() => setIsopen(false)}
+          className={`h-11 w-full rounded-full border border-transparent bg-[#202c33] pl-11 pr-4 text-sm text-[#e9edef] placeholder:text-[#8696a0] focus-visible:ring-2 focus-visible:ring-[#00a884] ${
+            isOpen ? "ring-2 ring-[#00a884]" : ""
+          }`}
+        />
+      </div>
     </div>
   );
 }

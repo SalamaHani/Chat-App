@@ -15,61 +15,66 @@ interface ChatMessageprops {
 }
 const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
   const session = authClient.useSession();
-  // const [isOnw , setIsOnw] = useState(true)
-  const isOnw = session?.data?.user?.email == data?.sender?.email;
-  // console.log(`isookifjv ${isOnw}`);
-
-  // const otherSeen = (data.seen || []).filter((u) => u.id !== data.sender.id);
+  const isOwn = session?.data?.user?.email === data?.sender?.email;
 
   const hasSeen = useMemo(() => {
     return (data.seen || []).some((user) => user.email !== data.sender.email);
   }, [data.seen, data.sender.email]);
 
-  const contener = clsx("flex gap-3 p-4", isOnw && "justify-end");
-  const body = clsx("flex flex-col gap-2", isOnw && "item-end");
-  const avatar = clsx(isOnw && "order-2");
+  const container = clsx("flex gap-3 px-5 py-2", isOwn && "justify-end");
+  const body = clsx("flex flex-col gap-1.5", isOwn && "items-end");
+  const avatar = clsx(isOwn && "order-2");
   const message = clsx(
-    "text-sm  max-w-md  overflow-hidden relative max-w-[75%] px-3 py-2 rounded-xl  shadow-[0_2px_4px_rgba(0,0,0,0.18)] ",
-    isOnw
-      ? "bg-sidebar-primary text-white  rounded-br-none"
-      : "bg-white dark:bg-neutral-800 rounded-bl-none",
-    data.image ? "p-0 rounded-md " : "px-3 py-2 rounded-full"
+    "relative max-w-[70%] overflow-hidden rounded-3xl border text-sm shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition",
+    isOwn
+      ? "rounded-br-none border-[#0d4f3c] bg-gradient-to-br from-[#066d52] to-[#02412f] text-white"
+      : "rounded-bl-none border-white/10 bg-gradient-to-br from-[#1f2c34] to-[#111a20] text-[#e9edef]",
+    data.image ? "rounded-2xl p-0" : "px-4 py-3"
   );
+  const senderLabel = !isOwn ? data?.sender?.name ?? "Member" : "You";
   return (
-    <div className={contener}>
+    <div className={container}>
       <div className={avatar}>
         <AvatarChat user={data.sender} />
       </div>
       <div className={body}>
-        <div className=" flex  flex-col gap-1">
+        <div
+          className={clsx(
+            "text-xs font-semibold uppercase tracking-wide text-[#7c8f99]",
+            isOwn && "text-[#9fd6c3]"
+          )}
+        >
+          {senderLabel}
+        </div>
+        <div className="flex flex-col gap-1">
           <div className={message}>
             {data.image ? (
               <Image
-                alt="Imag"
+                alt="Image"
                 src={data.image}
                 width={288}
                 height={288}
-                className=" object-cover  rounded-md"
+                className="rounded-md object-cover"
               />
             ) : (
               <div>{data.body}</div>
             )}
           </div>
-          <div className="flex items-center gap-1">
-            {isOnw && (
+          <div className="flex items-center gap-1 text-[11px] text-[#8696a0]">
+            {isOwn && (
               <>
                 {hasSeen ? (
-                  <div className="text-xs text-gray-500 font-light">
-                    <CheckCheck size={11} className="text-sky-500" />
+                  <div className="font-light">
+                    <CheckCheck size={11} className="text-[#53bdeb]" />
                   </div>
                 ) : (
-                  <div className="text-xs text-gray-500 font-light">
-                    <Check size={11} className="text-neutral-500" />
+                  <div className="font-light">
+                    <Check size={11} className="text-[#8696a0]" />
                   </div>
                 )}
               </>
             )}
-            <div className="text-sm text-gray-400">
+            <div>
               <MessageTime createdAt={data?.createdAt ?? Date.now} />
             </div>
           </div>
