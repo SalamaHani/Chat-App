@@ -27,9 +27,11 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { setstring } from "@/utils/format";
+
 interface NewchatProps {
   users: User[];
 }
+
 const NewChat: React.FC<NewchatProps> = ({ users }) => {
   const [open, setOpen] = useState(false);
   const [openg, setOpeng] = useState(false);
@@ -38,6 +40,7 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
   const [search, setSearch] = useState("");
   const [loding, setloding] = useState(false);
   const router = useRouter();
+
   const toggleUser = useCallback((user: User) => {
     setSelectedUsers((prev) =>
       prev.includes(user)
@@ -57,7 +60,7 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
     value: user.id,
     label: user.name,
   }));
-  console.log(options);
+
   const handelCreateGroup = () => {
     if (!isValid) return;
     console.log("Creating group:", {
@@ -84,20 +87,22 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
         setloding(false);
       });
   };
+
   const handelDeleteUser = (userId: string) => {
     const newUsers = selectedUsers.filter((user) => user.id != userId);
     setSelectedUsers(newUsers);
   };
+
   const format = ({ user }: { user: User }) => {
     return (
       <Badge
-        className="bg-sidebar-primary my-3 text-white flex justify-between items-center"
+        className="bg-primary my-3 text-primary-foreground flex justify-between items-center"
         variant="outline"
       >
         <div className=" flex items-center gap-1 ">
-          <Avatar className="w-5 h-5 bg-neutral-400 dark:bg-neutral-100">
+          <Avatar className="w-5 h-5 bg-muted">
             <AvatarImage src={`${user.image}`} alt="@shadcn" />
-            <AvatarFallback className="bg-neutral-300 dark:bg-neutral-100">
+            <AvatarFallback className="bg-muted">
               {setstring(user.name)}
             </AvatarFallback>
           </Avatar>
@@ -112,6 +117,7 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
       </Badge>
     );
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
@@ -119,7 +125,7 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
           <CirclePlus size={20} />
         </AnimateIcon>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[400px] p-0 ">
+      <DialogContent className="sm:max-w-[400px] p-0 bg-card dark:bg-card border-border">
         <DialogHeader className="p-4">
           <DialogTitle>New Chat</DialogTitle>
           <DialogDescription>
@@ -127,17 +133,15 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
           </DialogDescription>
         </DialogHeader>
         <div className=" overflow-hidden h-full  w-full">
-          <div className="  flex-1 flex  flex-col p-4  bg-white dark:bg-neutral-950  shrink-0  gap-2  ">
+          <div className="flex-1 flex flex-col p-4 bg-card dark:bg-card shrink-0 gap-2">
             <div
-              className={`${
-                true ? ` bg-neutral-100 dark:bg-neutral-800` : `bg-none`
-              } dark:hover:bg-neutral-800   py-2  bg-neutral-100  hover:bg-neutral-200 flex items-center justify-between cursor-pointer  rounded-sm  `}
+              className="dark:hover:bg-accent py-2 bg-secondary hover:bg-accent flex items-center justify-between cursor-pointer rounded-sm"
             >
               <Dialog open={openg} onOpenChange={setOpeng}>
                 <DialogTrigger>
                   <div className="flex px-4 items-center gap-2 cursor-pointer">
                     <div className="relative">
-                      <div className="rounded-full flex justify-center items-center ring-1 ring-white h-12 w-12">
+                      <div className="rounded-full flex justify-center items-center ring-1 ring-border h-12 w-12">
                         <AnimateIcon animateOnHover>
                           <UsersRound />
                         </AnimateIcon>
@@ -148,7 +152,7 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
                     </div>
                   </div>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[400px] p-0">
+                <DialogContent className="sm:max-w-[400px] p-0 bg-card dark:bg-card border-border">
                   <DialogHeader className="p-4">
                     <DialogTitle>New Group</DialogTitle>
                     <DialogDescription className="text-sx text-muted-foreground">
@@ -158,7 +162,7 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
                   <div className="p-4 flex flex-col gap-4">
                     <div>
                       <Label htmlFor="groupName" className="mb-4">
-                        Group Name <span className="text-red-500">*</span>
+                        Group Name <span className="text-destructive">*</span>
                       </Label>
                       <Input
                         id="groupName"
@@ -169,27 +173,24 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
                     </div>
 
                     {isValid ? (
-                      <ScrollArea className={`h-[70px] w-full   p-2}`}>
+                      <ScrollArea className="h-[70px] w-full p-2">
                         <div
-                          className={`w-full  ${
-                            selectedUsers.length >= 2 ? `h-[50px] ` : ``
-                          }`}
+                          className={`w-full ${selectedUsers.length >= 2 ? `h-[50px] ` : ``
+                            }`}
                         >
-                          <div className={` relative`}>
+                          <div className="relative">
                             {/* Filter Pills */}
                             <div
-                              className={`flex dark:bg-black ${
-                                selectedUsers.length >= 2
+                              className={`flex dark:bg-card ${selectedUsers.length >= 2
                                   ? `flex-col absolute left-0 top-0`
                                   : `flex-row block`
-                              } items-center w-full  max-w-lg border   dark:border-none rounded-xl    bg-white shadow-sm overflow-hidden`}
+                                } items-center w-full max-w-lg border border-border rounded-xl bg-card shadow-sm overflow-hidden`}
                             >
                               <div
-                                className={`flex z-999999 ${
-                                  selectedUsers.length >= 2
-                                    ? `flex-wrap w-full   justify-start `
+                                className={`flex z-50 ${selectedUsers.length >= 2
+                                    ? `flex-wrap w-full justify-start `
                                     : `flex-nowrap`
-                                }     space-x-2  px-2 `}
+                                  } space-x-2 px-2`}
                               >
                                 {selectedUsers.map((user, index) => (
                                   <React.Fragment key={index}>
@@ -197,12 +198,12 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
                                   </React.Fragment>
                                 ))}
                               </div>
-                              <div className=" flex flex-1 w-full space-x-2  px-2">
+                              <div className=" flex flex-1 w-full space-x-2 px-2">
                                 <input
                                   type="text"
-                                  placeholder="Sersh User"
+                                  placeholder="Search User"
                                   onChange={(e) => setSearch(e.target.value)}
-                                  className={` p-2 bg-gray-50 dark:bg-black  flex-1   border-none  outline-none transition-all duration-300  focus:border-none  rounded-xl   text-base dark:placeholder:text-white placeholder:text-gray-500 `}
+                                  className="p-2 bg-secondary dark:bg-secondary flex-1 border-none outline-none transition-all duration-300 focus:border-none rounded-xl text-base text-foreground placeholder:text-muted-foreground"
                                 />
                               </div>
                             </div>
@@ -212,11 +213,10 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
                     ) : null}
                   </div>
                   <div
-                    className={`p-4 flex flex-col gap-2  ${
-                      selectedUsers.length >= 2 ? `mt-3 ` : ``
-                    }`}
+                    className={`p-4 flex flex-col gap-2 ${selectedUsers.length >= 2 ? `mt-3 ` : ``
+                      }`}
                   >
-                    <ScrollArea className="h-[250px] w-full rounded-md border p-2">
+                    <ScrollArea className="h-[250px] w-full rounded-md border border-border p-2">
                       <h4 className="text-sm mb-2 font-medium">
                         Select Members
                       </h4>
@@ -233,7 +233,7 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
                               <span className="font-medium">{user.name}</span>
                             </div>
                             <Checkbox
-                              className=" data-[state=checked]:bg-sidebar-primary  "
+                              className="data-[state=checked]:bg-primary"
                               checked={selectedUsers.includes(user)}
                             />
                           </div>
@@ -246,7 +246,7 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
                         {selectedUsers.length} members selected
                       </p>
                       <Button
-                        className="bg-sidebar-primary hover:bg-sky-500"
+                        className="bg-primary hover:bg-primary/90"
                         disabled={!isValid}
                         onClick={handelCreateGroup}
                       >
@@ -276,4 +276,5 @@ const NewChat: React.FC<NewchatProps> = ({ users }) => {
     </Dialog>
   );
 };
+
 export default NewChat;

@@ -71,12 +71,12 @@ export default function ConversationBox({
     <div
       onClick={handelCilek}
       className={`
-        flex items-center gap-3 px-3 py-3 cursor-pointer
+        flex items-center gap-3 px-3 py-2 mt-2 rounded-md cursor-pointer
         transition-colors duration-100
-        ${
-          isActive
-            ? "bg-[#f0f2f5] dark:bg-[#2a3942]"
-            : "bg-white dark:bg-[#111b21] hover:bg-[#f5f6f6] dark:hover:bg-[#202c33]"
+        hover:bg-white dark:hover:bg-accent
+        ${isActive
+          ? "bg-white dark:bg-accent"
+          : "hover:bg-white dark:hover:bg-accent"
         }
       `}
     >
@@ -97,11 +97,10 @@ export default function ConversationBox({
             {data?.name || othuruser?.name}
           </span>
           <span
-            className={`text-xs flex-shrink-0 ${
-              unseenCount > 0
-                ? "text-[#25d366]"
-                : "text-neutral-500 dark:text-neutral-400"
-            }`}
+            className={`text-xs flex-shrink-0 ${unseenCount > 0
+              ? "text-primary"
+              : "text-muted-foreground"
+              }`}
           >
             <MessageTime createdAt={lastMessage?.createdAt ?? Date.now} />
           </span>
@@ -112,7 +111,7 @@ export default function ConversationBox({
           <div className="flex items-center gap-1 flex-1 min-w-0">
             {/* Show checkmarks for own messages */}
 
-            {hasSeen && isOwnMessage ? (
+            {hasSeen ? (
               <CheckCheck size={14} className="text-sky-400" />
             ) : (
               <Check size={14} className="text-white/70" />
@@ -127,7 +126,7 @@ export default function ConversationBox({
 
           {/* Unread badge */}
           {unseenCount > 0 && (
-            <Badge className="h-5 min-w-5 rounded-full bg-[#25d366] hover:bg-[#25d366] text-white text-[11px] font-medium px-1.5 flex-shrink-0">
+            <Badge className="h-5 min-w-5 rounded-full bg-primary hover:bg-primary text-primary-foreground text-[11px] font-medium px-1.5 flex-shrink-0">
               {unseenCount}
             </Badge>
           )}

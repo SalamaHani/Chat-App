@@ -23,7 +23,7 @@ async function page({ params }: IdPrames) {
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       <HedConversation conversation={conversation} />
-      <Body intionalMesssages={messages} />
+      <Body intionalMesssages={messages} isGroup={!!conversation.isGroup} />
     </div>
   );
 }

@@ -14,9 +14,10 @@ import { usePendingMessages } from "@/app/context/PendingMessagesContext";
 
 interface MessagesProps {
   intionalMesssages: FullMessageType[];
+  isGroup?: boolean;
 }
 
-const Body: React.FC<MessagesProps> = ({ intionalMesssages }) => {
+const Body: React.FC<MessagesProps> = ({ intionalMesssages, isGroup }) => {
   const [messages, setMessages] = useState(intionalMesssages);
   const bottonRef = useRef<HTMLDivElement>(null);
   const { conversationId } = useConverstions();
@@ -95,6 +96,7 @@ const Body: React.FC<MessagesProps> = ({ intionalMesssages }) => {
                 isLast={index === messages.length - 1 && conversationPendingMessages.length === 0}
                 key={msg.id}
                 data={msg}
+                isGroup={isGroup}
               />
             ))}
 
@@ -109,7 +111,7 @@ const Body: React.FC<MessagesProps> = ({ intionalMesssages }) => {
       </div>
 
       {/* WhatsApp style input area - light gray */}
-      <div className="flex h-16 bg-[#f0f2f5] dark:bg-[#202c33] items-center px-4">
+      <div className="flex h-16 items-center bg-[#f0f2f5] dark:bg-[#202c33] px-4">
         <FormChat />
       </div>
     </div>

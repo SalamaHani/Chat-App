@@ -23,6 +23,7 @@ interface PendingMessagesContextType {
     addPendingMessage: (message: Omit<PendingMessage, "id" | "createdAt" | "status" | "sender" | "senderId">) => string;
     updatePendingMessageStatus: (id: string, status: "sent" | "failed") => void;
     removePendingMessage: (id: string) => void;
+    retryPendingMessage: (id: string) => PendingMessage | null;
 }
 
 const PendingMessagesContext = createContext<PendingMessagesContextType | null>(null);
@@ -63,6 +64,20 @@ export function PendingMessagesProvider({ children }: { children: React.ReactNod
         setPendingMessages((prev) => prev.filter((msg) => msg.id !== id));
     }, []);
 
+    const retryPendingMessage = useCallback((id: string): PendingMessage | null => {
+        let messageToRetry: PendingMessage | null = null;
+        setPendingMessages((prev) =>
+            prev.map((msg) => {
+                if (msg.id === id && msg.status === "failed") {
+                    messageToRetry = { ...msg, status: "sending" };
+                    return messageToRetry;
+                }
+                return msg;
+            })
+        );
+        return messageToRetry;
+    }, []);
+
     return (
         <PendingMessagesContext.Provider
             value={{
@@ -70,6 +85,7 @@ export function PendingMessagesProvider({ children }: { children: React.ReactNod
                 addPendingMessage,
                 updatePendingMessageStatus,
                 removePendingMessage,
+                retryPendingMessage,
             }}
         >
             {children}

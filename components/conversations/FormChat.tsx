@@ -77,7 +77,7 @@ function FormChat() {
   };
 
   return (
-    <div className="flex items-center gap-3 w-full">
+    <div className="flex items-center   gap-3 w-full">
       {/* Emoji button */}
       <button type="button" className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">
         <Smile size={24} />
@@ -106,7 +106,7 @@ function FormChat() {
         />
         <button
           type="submit"
-          className="rounded-full p-2.5 bg-[#00a884] hover:bg-[#008f72] cursor-pointer transition-colors"
+          className="rounded-full p-2.5 bg-sidebar-primary  cursor-pointer transition-colors"
         >
           <AnimateIcon animateOnHover>
             <SendHorizontal color="#fff" size={20} />

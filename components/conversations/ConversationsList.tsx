@@ -76,8 +76,8 @@ const ConversationsList: React.FC<Conversationsporps> = ({ intialItems }) => {
   }
 
   return (
-    <div className="flex-1 bg-white dark:bg-[#111b21] overflow-hidden">
-      <ScrollArea className="h-full">
+    <div className="flex-1 overflow-hidden">
+      <ScrollArea className="h-full p-2 ">
         <div>
           {Items.map((item) => (
             <ConversationBox

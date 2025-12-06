@@ -27,9 +27,9 @@ const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
   }, [conversation]);
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 bg-[#f0f2f5] dark:bg-[#202c33] transition-[width,height] ease-linear">
-      <div className="flex items-center justify-between w-full gap-2 px-4">
-        <div className="flex items-center gap-3">
+    <header className="flex h-16 shrink-0 items-center gap-2  bg-[#f0f2f5] dark:bg-[#202c33] ease-linear">
+      <div className="flex items-center justify-between  w-full gap-2 px-4">
+        <div className="flex items-center  gap-3">
           {conversation.isGroup ? (
             <AvatarGroup users={conversation.users} />
           ) : (

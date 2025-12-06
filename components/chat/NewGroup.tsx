@@ -70,7 +70,7 @@ const NewGroup: React.FC<NewGroupProps> = ({ users, isOpen }) => {
           </div>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[400px] p-0">
+      <DialogContent className="sm:max-w-[400px] p-0 bg-card dark:bg-card border-border">
         <DialogHeader className="p-4">
           <DialogTitle>New Group</DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground">
@@ -81,7 +81,7 @@ const NewGroup: React.FC<NewGroupProps> = ({ users, isOpen }) => {
         <div className="p-4 flex flex-col gap-4">
           <div>
             <Label htmlFor="groupName">
-              Group Name <span className="text-red-500">*</span>
+              Group Name <span className="text-destructive">*</span>
             </Label>
             <Input
               id="groupName"

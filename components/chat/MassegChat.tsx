@@ -12,9 +12,10 @@ import { useMemo } from "react";
 interface ChatMessageprops {
   data: FullMessageType;
   isLast?: boolean;
+  isGroup?: boolean;
 }
 
-const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
+const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast, isGroup }) => {
   const session = authClient.useSession();
   const isOwn = session?.data?.user?.email === data?.sender?.email;
 
@@ -30,16 +31,19 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
   const message = clsx(
     "relative overflow-hidden rounded-lg px-3 py-2 text-sm shadow-sm",
     isOwn
-      ? "rounded-tr-none bg-[#d9fdd3] dark:bg-[#005c4b] text-neutral-900 dark:text-white"
-      : "rounded-tl-none bg-white dark:bg-[#202c33] text-neutral-900 dark:text-white",
+      ? "rounded-tr-none bg-[#d9fdd3] dark:bg-[#005c4b] text-foreground"
+      : "rounded-tl-none bg-card dark:bg-secondary text-foreground",
     data.image ? "rounded-lg p-1" : "rounded-lg px-3 py-2"
   );
 
   return (
     <div className={container}>
-      <div className={avatar}>
-        <AvatarChat user={data.sender} />
-      </div>
+      {/* Only show avatar in group chats */}
+      {isGroup && (
+        <div className={avatar}>
+          <AvatarChat user={data.sender} />
+        </div>
+      )}
       <div className={body}>
         <div className="flex flex-col">
           <div className={message}>
@@ -72,7 +76,7 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
               <>
                 <div className="leading-relaxed">{data.body}</div>
                 <div className="flex items-center justify-end gap-1 mt-1">
-                  <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
+                  <span className="text-[11px] text-muted-foreground">
                     <MessageTime createdAt={data?.createdAt ?? Date.now} />
                   </span>
                   {isOwn && (
@@ -80,7 +84,7 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast }) => {
                       {hasSeen ? (
                         <CheckCheck size={16} className="text-sky-500" />
                       ) : (
-                        <Check size={16} className="text-neutral-400" />
+                        <Check size={16} className="text-muted-foreground" />
                       )}
                     </>
                   )}
