@@ -8,10 +8,13 @@ import useOthouUser from "@/app/hook/useOthouUser";
 import { MessageTime } from "../chat/Users";
 import AvatarChat from "./AvatarChat";
 import AvatarGroup from "./AvatarGroup";
+import { Check, CheckCheck } from "lucide-react";
+
 interface ConversationBoxProps {
   data: FullConversationstype;
   isActive?: boolean;
 }
+
 export default function ConversationBox({
   data,
   isActive,
@@ -19,6 +22,7 @@ export default function ConversationBox({
   const routur = useRouter();
   const session = authClient.useSession();
   const othuruser = useOthouUser(data);
+
   const handelCilek = useCallback(() => {
     routur.push(`/conversations/${data.id}`);
   }, [data, routur]);
@@ -35,15 +39,14 @@ export default function ConversationBox({
   const hasSeen = useMemo(() => {
     if (!lastMessage) return false;
     if (!userEmail) return false;
-
     const seenArray = lastMessage.seen || [];
-
-    return (
-      seenArray.filter((user) => {
-        return user?.email === userEmail;
-      }).length !== 0
-    );
+    return seenArray.filter((user) => user?.email === userEmail).length !== 0;
   }, [userEmail, lastMessage]);
+
+  const isOwnMessage = useMemo(() => {
+    if (!lastMessage) return false;
+    return lastMessage.sender?.email === userEmail;
+  }, [lastMessage, userEmail]);
 
   const unseenCount = useMemo(() => {
     if (!data.messages || !userEmail) return 0;
@@ -56,49 +59,79 @@ export default function ConversationBox({
 
   const lasetMsessageText = useMemo(() => {
     if (lastMessage?.image) {
-      return "Send an image";
+      return "📷 Photo";
     }
     if (lastMessage?.body) {
       return lastMessage?.body;
     }
-    return "Start Conversation ";
+    return "Start a conversation";
   }, [lastMessage]);
 
   return (
     <div
       onClick={handelCilek}
-      className={`flex cursor-pointer items-center justify-between gap-5 rounded-2xl p-3 transition-all ${
-        isActive ? "bg-[#2a3942]" : "hover:bg-[#202c33]"
-      }`}
+      className={`
+        flex items-center gap-3 px-3 py-3 cursor-pointer
+        transition-colors duration-100
+        ${
+          isActive
+            ? "bg-[#f0f2f5] dark:bg-[#2a3942]"
+            : "bg-white dark:bg-[#111b21] hover:bg-[#f5f6f6] dark:hover:bg-[#202c33]"
+        }
+      `}
     >
-      <div className="flex items-center gap-3">
+      {/* Avatar */}
+      <div className="flex-shrink-0">
         {data.isGroup ? (
           <AvatarGroup users={data.users} />
         ) : (
           <AvatarChat user={othuruser} />
         )}
-        <div className="space-y-0.5">
-          <div className="text-sm font-semibold text-[#e9edef]">
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 min-w-0 pb-3">
+        {/* Top row: Name and Time */}
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[16px] font-normal text-neutral-900 dark:text-white truncate">
             {data?.name || othuruser?.name}
-          </div>
-          <div
-            className={`truncate text-xs ${
-              hasSeen ? "text-[#8696a0]" : "font-semibold text-[#d1d7db]"
+          </span>
+          <span
+            className={`text-xs flex-shrink-0 ${
+              unseenCount > 0
+                ? "text-[#25d366]"
+                : "text-neutral-500 dark:text-neutral-400"
             }`}
           >
-            {lasetMsessageText.length > 30
-              ? lasetMsessageText.substring(0, 30) + "...."
-              : lasetMsessageText}
-          </div>
+            <MessageTime createdAt={lastMessage?.createdAt ?? Date.now} />
+          </span>
         </div>
-      </div>
-      <div className="flex h-13 flex-col items-end justify-around text-xs text-[#8696a0]">
-        <MessageTime createdAt={lastMessage?.createdAt ?? Date.now} />
-        {unseenCount != 0 ? (
-          <Badge className="h-4 min-w-4 rounded-full bg-[#25d366] px-1 font-mono text-xs tabular-nums text-[#111b21]">
-            {unseenCount}
-          </Badge>
-        ) : null}
+
+        {/* Bottom row: Message preview and badge */}
+        <div className="flex items-center justify-between gap-2 mt-1">
+          <div className="flex items-center gap-1 flex-1 min-w-0">
+            {/* Show checkmarks for own messages */}
+
+            {hasSeen && isOwnMessage ? (
+              <CheckCheck size={14} className="text-sky-400" />
+            ) : (
+              <Check size={14} className="text-white/70" />
+            )}
+
+            <p className="text-[14px] text-neutral-500 dark:text-neutral-400 truncate">
+              {lasetMsessageText.length > 40
+                ? lasetMsessageText.substring(0, 40) + "..."
+                : lasetMsessageText}
+            </p>
+          </div>
+
+          {/* Unread badge */}
+          {unseenCount > 0 && (
+            <Badge className="h-5 min-w-5 rounded-full bg-[#25d366] hover:bg-[#25d366] text-white text-[11px] font-medium px-1.5 flex-shrink-0">
+              {unseenCount}
+            </Badge>
+          )}
+        </div>
       </div>
     </div>
   );

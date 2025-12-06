@@ -1,6 +1,8 @@
 "use client";
 import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { PendingMessagesProvider } from "./context/PendingMessagesContext";
+
 function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
@@ -10,10 +12,13 @@ function Providers({ children }: { children: React.ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
-        <Toaster />
-        {children}
+        <PendingMessagesProvider>
+          <Toaster />
+          {children}
+        </PendingMessagesProvider>
       </ThemeProvider>
     </>
   );
 }
 export default Providers;
+

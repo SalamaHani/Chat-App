@@ -16,17 +16,19 @@ interface HedConversationProps {
     users: User[];
   };
 }
+
 const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
   const otherUser = useOthouUser(conversation);
   const statusText = useMemo(() => {
     if (conversation.isGroup) {
       return `${conversation.users.length} members`;
     }
-    return "Active";
+    return "last seen recently";
   }, [conversation]);
+
   return (
-    <header className="flex h-20 shrink-0 items-center rounded-t-[28px] bg-[#202c33] text-[#e9edef] shadow-[0_1px_0_rgba(255,255,255,0.05)] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
-      <div className="flex w-full items-center justify-between gap-4 px-6">
+    <header className="flex h-16 shrink-0 items-center gap-2 bg-[#f0f2f5] dark:bg-[#202c33] transition-[width,height] ease-linear">
+      <div className="flex items-center justify-between w-full gap-2 px-4">
         <div className="flex items-center gap-3">
           {conversation.isGroup ? (
             <AvatarGroup users={conversation.users} />
@@ -34,23 +36,23 @@ const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
             <AvatarChat user={otherUser} />
           )}
           <div>
-            <div className="text-sm font-semibold leading-tight">
+            <div className="text-base font-semibold leading-tight text-neutral-900 dark:text-white">
               {conversation.name || otherUser.name}
             </div>
-            <div className="text-xs font-medium text-[#8696a0]">
+            <div className="text-xs font-normal text-neutral-500 dark:text-neutral-400">
               {statusText}
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <AnimateIcon animateOnHover>
-            <PhoneCall className="cursor-pointer text-[#8696a0]" size={20} />
+            <Cctv className="cursor-pointer text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors" size={22} />
           </AnimateIcon>
           <AnimateIcon animateOnHover>
-            <Cctv className="cursor-pointer text-[#8696a0]" size={20} />
+            <PhoneCall className="cursor-pointer text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors" size={22} />
           </AnimateIcon>
           <AnimateIcon animateOnHover>
-            <Search className="cursor-pointer text-[#8696a0]" size={20} />
+            <Search className="cursor-pointer text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors" size={22} />
           </AnimateIcon>
           <Ditales conversation={conversation} />
         </div>
@@ -60,3 +62,4 @@ const HedConversation: React.FC<HedConversationProps> = ({ conversation }) => {
 };
 
 export default HedConversation;
+

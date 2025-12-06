@@ -1,23 +1,39 @@
 import React from "react";
+import { MessageCircle } from "lucide-react";
 
 function EmptyConversation() {
   return (
-    <div className="flex h-full w-full rounded-[32px] border border-white/5 bg-[#0b141a] shadow-2xl shadow-black/40">
-      <div className="flex flex-1 flex-col rounded-[32px]">
-        <header className="flex h-20 shrink-0 items-center rounded-t-[32px] bg-[#202c33] px-6 text-[#e9edef] shadow-[0_1px_0_rgba(255,255,255,0.05)]">
-          <div>
-            <div className="text-sm font-semibold">WhatsApp Web</div>
-            <div className="text-xs text-[#8696a0]">
-              Notifications are end-to-end encrypted
-            </div>
+    <div className="flex flex-col h-full w-full overflow-hidden">
+      {/* Header placeholder */}
+      <div className="flex h-16 shrink-0 items-center bg-[#f0f2f5] dark:bg-[#202c33] border-b border-neutral-200 dark:border-neutral-700">
+        <div className="px-4">
+          <div className="text-lg font-semibold text-neutral-800 dark:text-white">Chat</div>
+          <div className="text-xs text-neutral-500 dark:text-neutral-400">Select a conversation</div>
+        </div>
+      </div>
+
+      {/* Empty state content */}
+      <div className="flex-1 flex flex-col items-center justify-center bg-[#efeae2] dark:bg-[#0b141a]">
+        <div className="flex flex-col items-center gap-6 p-8">
+          <div className="w-24 h-24 rounded-full bg-[#00a884]/10 flex items-center justify-center">
+            <MessageCircle className="w-12 h-12 text-[#00a884]" />
           </div>
-        </header>
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 bg-[#0b141a]/80 text-center text-[#e9edef]">
-          <h1 className="text-2xl font-semibold">Keep your phone connected</h1>
-          <p className="max-w-md text-sm text-[#8696a0]">
-            WhatsApp connects to your phone to sync messages. To reduce data
-            usage, connect your phone to Wi-Fi.
-          </p>
+          <div className="text-center space-y-2">
+            <h1 className="text-2xl font-light text-neutral-700 dark:text-neutral-300">
+              Chat App
+            </h1>
+            <p className="text-neutral-500 dark:text-neutral-400 max-w-md text-sm">
+              Select a conversation from the list to start messaging.<br />
+              Stay connected with your friends and team.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer placeholder */}
+      <div className="flex h-16 bg-[#f0f2f5] dark:bg-[#202c33] border-t border-neutral-200 dark:border-neutral-700 items-center justify-center">
+        <div className="text-neutral-500 dark:text-neutral-400 text-sm">
+          🔒 End-to-end encrypted
         </div>
       </div>
     </div>

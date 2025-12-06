@@ -7,7 +7,8 @@ import { SendHorizontal } from "../animate-ui/icons/send-horizontal";
 import axios from "axios";
 import useConverstion from "@/app/hook/useConverstions";
 import { CldUploadButton } from "next-cloudinary";
-import { ImageIcon, Mic, Paperclip, SmilePlus } from "lucide-react";
+import { ImageIcon, Smile } from "lucide-react";
+import { usePendingMessages } from "@/app/context/PendingMessagesContext";
 
 function FormChat() {
   const {
@@ -21,72 +22,94 @@ function FormChat() {
     },
   });
   const { conversationId } = useConverstion();
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const { addPendingMessage, updatePendingMessageStatus, removePendingMessage } = usePendingMessages();
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    if (!data.message?.trim()) return;
+
+    // Add pending message for instant display
+    const pendingId = addPendingMessage({
+      body: data.message,
+      image: null,
+      conversationId,
+    });
+
+    // Clear input immediately
     setValue("message", "", { shouldValidate: true });
-    axios.post("/api/messages", {
-      ...data,
-      conversationId,
-    });
+
+    try {
+      await axios.post("/api/messages", {
+        ...data,
+        conversationId,
+      });
+      // Message sent successfully - remove pending (real message will come from pusher)
+      updatePendingMessageStatus(pendingId, "sent");
+      // Remove after a short delay to allow pusher to deliver
+      setTimeout(() => removePendingMessage(pendingId), 500);
+    } catch (error) {
+      // Mark as failed
+      updatePendingMessageStatus(pendingId, "failed");
+    }
   };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handelUlod = (resault: any) => {
-    axios.post("/api/messages", {
-      image: resault?.info?.secure_url,
+  const handelUlod = async (resault: any) => {
+    const imageUrl = resault?.info?.secure_url;
+    if (!imageUrl) return;
+
+    // Add pending image message
+    const pendingId = addPendingMessage({
+      body: null,
+      image: imageUrl,
       conversationId,
     });
+
+    try {
+      await axios.post("/api/messages", {
+        image: imageUrl,
+        conversationId,
+      });
+      updatePendingMessageStatus(pendingId, "sent");
+      setTimeout(() => removePendingMessage(pendingId), 500);
+    } catch (error) {
+      updatePendingMessageStatus(pendingId, "failed");
+    }
   };
+
   return (
-    <div className="flex w-full flex-col gap-3 rounded-2xl border border-white/5 bg-[#182229] px-4 py-3 text-[#e9edef] shadow-[0_10px_34px_rgba(0,0,0,0.35)]">
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          aria-label="Emoji picker"
-          className="rounded-full border border-transparent p-2 text-[#b1bcc5] transition hover:border-white/20 hover:text-white"
-        >
-          <SmilePlus size={20} />
-        </button>
-        <CldUploadButton
-          options={{ maxFiles: 1 }}
-          onSuccess={handelUlod}
-          uploadPreset="chatimge"
-        >
-          <ImageIcon
-            className="cursor-pointer text-[#b1bcc5] transition hover:text-white"
-            size={20}
-          />
-        </CldUploadButton>
-        <button
-          type="button"
-          aria-label="Attach files"
-          className="rounded-full border border-transparent p-2 text-[#b1bcc5] transition hover:border-white/20 hover:text-white"
-        >
-          <Paperclip size={20} />
-        </button>
-      </div>
+    <div className="flex items-center gap-3 w-full">
+      {/* Emoji button */}
+      <button type="button" className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">
+        <Smile size={24} />
+      </button>
+
+      {/* Attachment button */}
+      <CldUploadButton
+        options={{ maxFiles: 1 }}
+        onSuccess={handelUlod}
+        uploadPreset="chatimge"
+      >
+        <ImageIcon className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 cursor-pointer transition-colors" size={24} />
+      </CldUploadButton>
+
+      {/* Message input form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-full items-center gap-3"
+        className="flex items-center gap-3 flex-1"
       >
         <MessageInput
           id="message"
           register={register}
           error={errors}
           required
-          placeholder="Type a message…"
+          placeholder="Type a message"
         />
         <button
-          type="button"
-          aria-label="Record voice note"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#b1bcc5] transition hover:text-white"
-        >
-          <Mic size={18} />
-        </button>
-        <button
           type="submit"
-          className="flex h-11 w-16 items-center justify-center rounded-full bg-[#00a884] text-white transition hover:bg-[#02956e]"
+          className="rounded-full p-2.5 bg-[#00a884] hover:bg-[#008f72] cursor-pointer transition-colors"
         >
           <AnimateIcon animateOnHover>
-            <SendHorizontal color="#f0f9ff" size={20} />
+            <SendHorizontal color="#fff" size={20} />
           </AnimateIcon>
         </button>
       </form>
@@ -95,3 +118,5 @@ function FormChat() {
 }
 
 export default FormChat;
+
+

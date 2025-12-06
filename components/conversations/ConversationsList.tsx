@@ -15,9 +15,9 @@ import { useRouter } from "next/navigation";
 interface Conversationsporps {
   intialItems: FullConversationstype[];
 }
+
 const ConversationsList: React.FC<Conversationsporps> = ({ intialItems }) => {
   const [Items, setItems] = useState(intialItems);
-  console.log(Items);
   const { conversationId } = useConverstions();
   const session = authClient.useSession();
   const route = useRouter();
@@ -76,19 +76,16 @@ const ConversationsList: React.FC<Conversationsporps> = ({ intialItems }) => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-160px)] max-h-[calc(100vh-160px)] overflow-hidden rounded-b-[28px] bg-[#111b21]">
+    <div className="flex-1 bg-white dark:bg-[#111b21] overflow-hidden">
       <ScrollArea className="h-full">
-        <div className="relative flex flex-col gap-1 px-4 py-3">
-          {Items.map((item) => {
-            console.log(item);
-            return (
-              <ConversationBox
-                data={item}
-                isActive={conversationId == item.id}
-                key={item.id}
-              />
-            );
-          })}
+        <div>
+          {Items.map((item) => (
+            <ConversationBox
+              data={item}
+              isActive={conversationId == item.id}
+              key={item.id}
+            />
+          ))}
         </div>
       </ScrollArea>
     </div>
@@ -96,3 +93,4 @@ const ConversationsList: React.FC<Conversationsporps> = ({ intialItems }) => {
 };
 
 export default ConversationsList;
+
