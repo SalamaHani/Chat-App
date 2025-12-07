@@ -15,6 +15,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { User } from "@prisma/client";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
 import { BadgeCheck } from "lucide-react";
+import { ReloadIcon } from "@radix-ui/react-icons";
 interface edtiAcountProps {
   user: User;
 }
@@ -32,16 +33,18 @@ export default function EditAccountDialog({ user }: edtiAcountProps) {
       setImage(URL.createObjectURL(file));
     }
   };
+  const [isLoding, setIsLoding] = useState(false);
   const handleSubmit = () => {
-    console.log("Submitting:", { name, bio, file });
+    setIsLoding(true);
     // TODO: send to API
+    setIsLoding(false);
   };
   return (
     <Dialog>
       <DialogTrigger asChild>
         <DropdownMenuItem>
           <BadgeCheck />
-          Account
+          Edit Account
         </DropdownMenuItem>
       </DialogTrigger>
 
@@ -92,7 +95,15 @@ export default function EditAccountDialog({ user }: edtiAcountProps) {
 
           {/* Submit button */}
           <Button className="w-full mt-3" onClick={handleSubmit}>
-            Save Changes
+            {isLoding ? (
+              <>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Please wait...
+              </>
+            ) : (
+              <> Save Changes</>
+            )}
+
           </Button>
         </div>
       </DialogContent>

@@ -34,7 +34,7 @@ export function NavMain({
             key={item.title}
             asChild
             defaultOpen={item.isActive}
-            className="group/collapsible"
+            className="group/collapsible cursor-pointer"
           >
             <Link className=" cursor-pointer" href={item.url}>
               <SidebarMenuButton isActive={item.isActive} tooltip={item.title}>

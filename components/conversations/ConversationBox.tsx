@@ -40,7 +40,15 @@ export default function ConversationBox({
     if (!lastMessage) return false;
     if (!userEmail) return false;
     const seenArray = lastMessage.seen || [];
-    return seenArray.filter((user) => user?.email === userEmail).length !== 0;
+    // For own messages: check if ANY OTHER user has seen it
+    // For received messages: check if current user has seen it
+    const isOwn = lastMessage.sender?.email === userEmail;
+    if (isOwn) {
+      // Check if anyone besides the sender has seen it
+      return seenArray.some((user) => user?.email !== userEmail);
+    }
+    // For received messages, check if current user has seen it
+    return seenArray.some((user) => user?.email === userEmail);
   }, [userEmail, lastMessage]);
 
   const isOwnMessage = useMemo(() => {
@@ -109,12 +117,13 @@ export default function ConversationBox({
         {/* Bottom row: Message preview and badge */}
         <div className="flex items-center justify-between gap-2 mt-1">
           <div className="flex items-center gap-1 flex-1 min-w-0">
-            {/* Show checkmarks for own messages */}
-
-            {hasSeen ? (
-              <CheckCheck size={14} className="text-sky-400" />
-            ) : (
-              <Check size={14} className="text-white/70" />
+            {/* Show checkmarks only for own messages */}
+            {isOwnMessage && (
+              hasSeen ? (
+                <CheckCheck size={14} className="text-sky-400 flex-shrink-0" />
+              ) : (
+                <Check size={14} className="text-neutral-400 flex-shrink-0" />
+              )
             )}
 
             <p className="text-[14px] text-neutral-500 dark:text-neutral-400 truncate">

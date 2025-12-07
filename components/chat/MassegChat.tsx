@@ -20,8 +20,9 @@ const MassegChat: React.FC<ChatMessageprops> = ({ data, isLast, isGroup }) => {
   const isOwn = session?.data?.user?.email === data?.sender?.email;
 
   const hasSeen = useMemo(() => {
+    if (!data.sender?.email) return false;
     return (data.seen || []).some((user) => user.email !== data.sender.email);
-  }, [data.seen, data.sender.email]);
+  }, [data.seen, data.sender?.email]);
 
   const container = clsx("flex gap-3 px-4 py-1", isOwn && "justify-end");
   const body = clsx("flex flex-col gap-1", isOwn && "items-end");

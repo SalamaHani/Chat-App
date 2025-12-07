@@ -36,7 +36,7 @@ function HeroSection() {
             <div className=" flex flex-wrap justify-center  gap-4">
               <Link
                 href="/conversations"
-                className="px-6 py-3  flex items-center bg-[#0ea5e9] italic  rounded-md shadow-lg text-lg font-semibold 
+                className="px-6 py-3  flex items-center bg-primary text-primary-foreground italic  rounded-md shadow-lg text-lg font-semibold 
              transition-all duration-300 ease-in-out 
                hover:scale-105"
               >

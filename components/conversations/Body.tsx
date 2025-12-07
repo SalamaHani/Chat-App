@@ -50,11 +50,17 @@ const Body: React.FC<MessagesProps> = ({ intionalMesssages, isGroup }) => {
       });
     };
 
-    const MessagesUpdatHndelr = (newMessage: FullMessageType) => {
+    const MessagesUpdatHndelr = (newMessage: Partial<FullMessageType> & { id: string }) => {
       setMessages((current) =>
         current.map((cuerntMessag) => {
           if (cuerntMessag.id == newMessage.id) {
-            return newMessage;
+            // Merge the update with existing message to preserve sender data
+            return {
+              ...cuerntMessag,
+              ...newMessage,
+              sender: newMessage.sender || cuerntMessag.sender,
+              seen: newMessage.seen || cuerntMessag.seen,
+            };
           }
           return cuerntMessag;
         })

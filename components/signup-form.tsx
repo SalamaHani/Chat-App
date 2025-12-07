@@ -75,7 +75,7 @@ export function SignUp({ className, ...props }: React.ComponentProps<"form">) {
                 <FormItem>
                   <FormLabel>User Name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input autoComplete="name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,7 +90,7 @@ export function SignUp({ className, ...props }: React.ComponentProps<"form">) {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="m@example.com" {...field} />
+                    <Input placeholder="m@example.com" autoComplete="email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,7 +106,7 @@ export function SignUp({ className, ...props }: React.ComponentProps<"form">) {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" {...field} />
+                      <Input type="password" autoComplete="new-password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

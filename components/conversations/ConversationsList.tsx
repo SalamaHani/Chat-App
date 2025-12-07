@@ -38,18 +38,76 @@ const ConversationsList: React.FC<Conversationsporps> = ({ intialItems }) => {
         return [conversation, ...current];
       });
     };
-    const updateHndelr = (conversation: FullConversationstype) => {
-      setItems((current) =>
-        current.map((curentConversation) => {
+    const updateHndelr = (conversation: FullConversationstype & {
+      lastMessageAt?: Date;
+      seenUpdate?: { seenByUserId: string; seenByUserEmail: string; messageIds: string[] };
+    }) => {
+      setItems((current) => {
+        const updated = current.map((curentConversation) => {
           if (curentConversation.id == conversation.id) {
+            const existingMessages = curentConversation.messages || [];
+            const newMessages = conversation.messages || [];
+
+            let finalMessages;
+
+            // Check if this is a seen update (from marking messages as seen)
+            if (conversation.seenUpdate && conversation.seenUpdate.messageIds.length > 0) {
+              // Update seen arrays for the specified messages
+              finalMessages = existingMessages.map(msg => {
+                if (conversation.seenUpdate!.messageIds.includes(msg.id)) {
+                  // Add the user to seen array if not already there
+                  const alreadySeen = msg.seen?.some(u => u.email === conversation.seenUpdate!.seenByUserEmail);
+                  if (!alreadySeen) {
+                    return {
+                      ...msg,
+                      seen: [...(msg.seen || []), {
+                        id: conversation.seenUpdate!.seenByUserId,
+                        email: conversation.seenUpdate!.seenByUserEmail
+                      }],
+                    };
+                  }
+                }
+                return msg;
+              });
+
+              // Also update the last message if provided
+              if (newMessages.length > 0) {
+                const lastMsgUpdate = newMessages[newMessages.length - 1];
+                finalMessages = finalMessages.map(msg => {
+                  if (msg.id === lastMsgUpdate.id) {
+                    return { ...msg, ...lastMsgUpdate };
+                  }
+                  return msg;
+                });
+              }
+            } else if (newMessages.length === 1) {
+              // Single new message - merge with existing
+              const messageMap = new Map(existingMessages.map(m => [m.id, m]));
+              newMessages.forEach(msg => {
+                messageMap.set(msg.id, { ...messageMap.get(msg.id), ...msg });
+              });
+              finalMessages = Array.from(messageMap.values());
+            } else {
+              // Fallback - just use existing messages
+              finalMessages = existingMessages;
+            }
+
             return {
               ...curentConversation,
-              messages: conversation.messages,
+              messages: finalMessages,
+              lastMessageAt: conversation.lastMessageAt || curentConversation.lastMessageAt,
             };
           }
           return curentConversation;
-        })
-      );
+        });
+
+        // Sort by lastMessageAt (newest first)
+        return updated.sort((a, b) => {
+          const aTime = new Date(a.lastMessageAt).getTime();
+          const bTime = new Date(b.lastMessageAt).getTime();
+          return bTime - aTime;
+        });
+      });
     };
     const deletehndelr = (conversation: FullConversationstype) => {
       setItems((current) => {

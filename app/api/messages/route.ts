@@ -57,13 +57,49 @@ export async function POST(requset: Request) {
         },
       },
     });
-    await pusherServesr.trigger(conversationId, "messages:new", newMessage);
+
+    // Create a lightweight payload for Pusher (max 10KB limit)
+    const pusherPayload = {
+      id: newMessage.id,
+      body: newMessage.body,
+      image: newMessage.image, // Keep image URL - client needs it
+      createdAt: newMessage.createdAt,
+      senderId: newMessage.senderId,
+      conversationId: newMessage.conversationId,
+      sender: {
+        id: newMessage.sender.id,
+        name: newMessage.sender.name,
+        email: newMessage.sender.email,
+        image: newMessage.sender.image,
+      },
+      seen: newMessage.seen.map((u) => ({ id: u.id, email: u.email })),
+    };
+
+    await pusherServesr.trigger(conversationId, "messages:new", pusherPayload);
     const LastMessage =
       UpdatedConvarstion.messages[UpdatedConvarstion.messages.length - 1];
+
+    // Lightweight payload for conversation update with full sender info
+    const lastMessagePayload = {
+      id: LastMessage.id,
+      body: LastMessage.body,
+      image: LastMessage.image ? "📷" : null, // Just indicate there's an image
+      createdAt: LastMessage.createdAt,
+      senderId: newMessage.senderId,
+      sender: {
+        id: newMessage.sender.id,
+        name: newMessage.sender.name,
+        email: newMessage.sender.email,
+        image: newMessage.sender.image,
+      },
+      seen: LastMessage.seen.map((u) => ({ id: u.id, email: u.email })),
+    };
+
     UpdatedConvarstion.users.map((user) => {
       pusherServesr.trigger(user.email!, "conversation:update", {
         id: conversationId,
-        messages: [LastMessage],
+        lastMessageAt: UpdatedConvarstion.lastMessageAt,
+        messages: [lastMessagePayload],
       });
     });
     return NextResponse.json(newMessage);

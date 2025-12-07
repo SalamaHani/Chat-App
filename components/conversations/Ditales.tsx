@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 import AvatarGroup from "./AvatarGroup";
+import { ReloadIcon } from "@radix-ui/react-icons";
 interface DitalesProps {
   conversation: Conversations & {
     users: User[];
@@ -124,7 +125,14 @@ const Ditales: React.FC<DitalesProps> = ({ conversation }) => {
                 onClick={handelDelete}
                 className="bg-red-500  hover:bg-red-500"
               >
-                {"Delete"}
+                {isloding ? (
+                  <>
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait...
+                  </>
+                ) : (
+                  <> Delete</>
+                )}
                 <RippleButtonRipples />
               </RippleButton>
             </div>

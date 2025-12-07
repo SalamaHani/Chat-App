@@ -1,6 +1,30 @@
 export const metadata = {
-  title: "Chat - Conversations",
-  description: "Stay connected with your team through real-time messaging",
+  title: "Conversations - Your Chats",
+  description:
+    "Access all your conversations in one place. Chat with friends, manage group conversations, and stay connected with real-time messaging and notifications.",
+  keywords: [
+    "conversations",
+    "chat messages",
+    "messaging inbox",
+    "group chats",
+    "direct messages",
+  ],
+  openGraph: {
+    title: "Conversations - Your Chats | Chat App",
+    description:
+      "Access all your conversations in one place. Stay connected with real-time messaging.",
+    url: "/conversations",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Conversations - Your Chats",
+    description: "Access all your conversations in one place.",
+  },
+  robots: {
+    index: false, // Conversations page should not be indexed (requires auth)
+    follow: false,
+  },
 };
 import { AppSidebar } from "@/components/app-sidebar";
 import "../globals.css";
@@ -40,9 +64,6 @@ export default async function ChatLayout({
           {/* Main header */}
           <header className="flex h-14 items-center bg-[#f0f2f5] dark:bg-[#202c33]">
             <div className="flex w-full items-center justify-between px-4">
-              <div>
-                <p className="text-lg font-semibold text-neutral-800 dark:text-white">Conversations</p>
-              </div>
               <SidebarTrigger className="rounded-full p-2 text-neutral-600 dark:text-neutral-400 transition hover:bg-neutral-200 dark:hover:bg-neutral-700" />
             </div>
           </header>

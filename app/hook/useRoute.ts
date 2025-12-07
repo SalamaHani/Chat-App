@@ -27,16 +27,15 @@ const useRoutes = () => {
         isActive: pathname === "/calls",
       },
       {
-        title: "Account",
-        url: "/account",
-        icon: BadgeCheck,
-        isActive: pathname === "/account",
-      },
-      {
         title: "Settings",
         url: "/settings",
         icon: Settings2,
-        isActive: pathname === "/settings",
+        isActive:
+          pathname === "/settings" ||
+          pathname === "/settings/account" ||
+          pathname === "/settings/security" ||
+          pathname === "/settings/chats" ||
+          pathname === "/settings/appearance",
       },
     ],
     [pathname, conversationId]

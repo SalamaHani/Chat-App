@@ -169,14 +169,14 @@ export function NavUser({ user }: PropsUser) {
                     }}
                   >
                     <BadgeCheck />
-                    Account
+                    Edit Account
                   </DropdownMenuItem>
                 </DialogTrigger>
 
                 <DialogContent className="max-w-md">
                   <DialogHeader>
                     <DialogTitle className="text-xl font-semibold">
-                      Account
+                      Edit Account
                     </DialogTitle>
                   </DialogHeader>
 
@@ -243,10 +243,7 @@ export function NavUser({ user }: PropsUser) {
                   </form>
                 </DialogContent>
               </Dialog>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
+
               <DropdownMenuItem>
                 <Bell />
                 Notifications

@@ -1,5 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-![alt text](image.png)
+![alt text](<لقطة شاشة 2025-12-07 123701.png>)
+![alt text](<لقطة شاشة 2025-12-07 124156.png>)
 ## Getting Started
 
 First, run the development server:
